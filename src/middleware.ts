@@ -20,7 +20,8 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // The external app's own links use its real base path (/wtp-gcw/blog/*).
+  // The external app's own links use its real base path
+  // (/katsumavietnamlubricantsvn/blog/*).
   // Redirect those back to the clean /blog/* URL so the address bar stays tidy.
   if (pathname === EXTERNAL_BASE || pathname.startsWith(`${EXTERNAL_BASE}/`)) {
     const cleanPath = pathname.replace(EXTERNAL_BASE, PUBLIC_BASE);
@@ -71,8 +72,8 @@ export const config = {
     "/blog/:path*",
     "/resources",
     "/resources/:path*",
-    "/wtp-gcw/blog",
-    "/wtp-gcw/blog/:path*",
+    "/katsumavietnamlubricantsvn/blog",
+    "/katsumavietnamlubricantsvn/blog/:path*",
     "/_next/static/:path*",
     "/static/:path*",
   ],

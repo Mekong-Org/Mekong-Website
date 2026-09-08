@@ -12,6 +12,9 @@ const NAV_LEFT = [
 ];
 
 const NAV_RIGHT = [
+  // /blog is proxied to the external content app by middleware.ts, so it is a
+  // real path here even though nothing under src/app serves it.
+  { label: "Bài viết", href: "/blog" },
   { label: "Về Katsuma", href: "/ve-katsuma" },
   { label: "Làm đại lý", href: "/lam-dai-ly" },
 ];

@@ -18,9 +18,14 @@ export const GOOGLE_VERIFICATION_TOKENS = [
   );
 
 // Brand slug for the external content app (/blog proxy). Client-specific —
-// swap via env when bootstrapping a new project. See middleware.ts and
-// src/app/api/blog/topics/route.ts for its usage.
-export const CONTENT_BRAND_SLUG = process.env.CONTENT_BRAND_SLUG ?? "";
+// swap when bootstrapping a new project, and keep the matcher in middleware.ts
+// in step. See middleware.ts and src/app/api/blog/topics/route.ts for its usage.
+//
+// The fallback is this project's real slug rather than an empty string: empty
+// makes the proxy's target path "//blog", which fails quietly, and the env var
+// is easy to forget when setting a host up.
+export const CONTENT_BRAND_SLUG =
+  process.env.CONTENT_BRAND_SLUG ?? "katsumavietnamlubricantsvn";
 
 // Secret key required by api.aeo.how, sent as the x-aeo-secret-key header when
 // fetching articles/topics for CONTENT_BRAND_SLUG. Server-only — never expose
