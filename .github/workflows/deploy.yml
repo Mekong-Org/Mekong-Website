@@ -16,10 +16,14 @@ concurrency:
 # a Vercel Pro plan; here the runner checks the code out itself and hands Vercel
 # a finished build, so the plan never comes into it.
 #
-# One secret, VERCEL_TOKEN. `vercel deploy --yes` creates and links the project
-# on its first run and reuses it afterwards, so there is no org id or project id
-# to copy out of a dashboard and keep in step. Anything the app reads from the
-# environment belongs in the Vercel project's own settings — one place, not two.
+# One secret, VERCEL_TOKEN. `vercel link --yes` creates the project on its first
+# run and reuses it afterwards, so there is no org id or project id to copy out
+# of a dashboard and keep in step. Anything the app reads from the environment
+# belongs in the Vercel project's own settings — one place, not two.
+#
+# The name is given explicitly. Left to itself the CLI names the project after
+# the checkout directory, which is "Mekong-Website", and Vercel rejects capitals
+# in a project name.
 
 jobs:
   build:
@@ -62,6 +66,8 @@ jobs:
 
       - name: Deploy to Vercel (preview)
         run: |
+          npx --yes vercel@latest link \
+            --yes --project mekong-website --token="$VERCEL_TOKEN"
           npx --yes vercel@latest deploy \
             --yes --token="$VERCEL_TOKEN"
         env:
@@ -77,7 +83,11 @@ jobs:
 
       - name: Deploy to Vercel (production)
         run: |
-          npx --yes vercel@latest deploy \
-            --prod --yes --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest link \
+            --yes --project mekong-website --token="$VERCEL_TOKEN"
+          url=$(npx --yes vercel@latest deploy \
+            --prod --yes --token="$VERCEL_TOKEN")
+          echo "Production URL: $url"
+          echo "### Deployed to $url" >> "$GITHUB_STEP_SUMMARY"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
