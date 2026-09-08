@@ -19,18 +19,25 @@ const NAV_RIGHT = [
 const NAV_ALL = [...NAV_LEFT, ...NAV_RIGHT];
 
 /**
- * Whether a nav item points at the page being shown.
+ * Whether a nav item is the one you are currently looking at.
  *
- * Anchor links never match. "Chọn nhớt" points at a section of the home page
- * rather than a route of its own, so treating it as a route would light it up
- * alongside "Trang chủ" every time someone is on /.
+ * Anchor links point at a section of the home page rather than a route, so they
+ * are matched against whichever section holds the middle of the screen instead
+ * of against the path. Once a section claims the nav, "Trang chủ" gives it up —
+ * otherwise two items would be lit at once on /.
  *
  * Everything else matches its own path and anything beneath it, so a product
  * detail page still marks "Sản phẩm" as the section you are in.
  */
-function isCurrentPage(href: string, pathname: string) {
-  if (href.includes("#")) return false;
-  if (href === "/") return pathname === "/";
+function isCurrentPage(
+  href: string,
+  pathname: string,
+  activeSection: string | null,
+) {
+  if (href.startsWith("/#")) {
+    return pathname === "/" && activeSection === href.slice(2);
+  }
+  if (href === "/") return pathname === "/" && activeSection === null;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -72,11 +79,13 @@ function LogoPanel() {
 function NavLink({
   item,
   pathname,
+  activeSection,
 }: {
   item: { label: string; href: string };
   pathname: string;
+  activeSection: string | null;
 }) {
-  const current = isCurrentPage(item.href, pathname);
+  const current = isCurrentPage(item.href, pathname, activeSection);
   return (
     <Link
       href={item.href}
@@ -98,11 +107,41 @@ function NavLink({
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
 
   // Route change closes the drawer — otherwise it stays open over the new page.
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  // Follows whichever home-page section holds the middle of the screen, so the
+  // nav item for it lights up on the way past rather than only when clicked.
+  useEffect(() => {
+    setActiveSection(null);
+    if (pathname !== "/") return;
+
+    const sections = NAV_ALL.filter((item) => item.href.startsWith("/#"))
+      .map((item) => document.getElementById(item.href.slice(2)))
+      .filter((node): node is HTMLElement => Boolean(node));
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          setActiveSection((current) =>
+            entry.isIntersecting ? id : current === id ? null : current,
+          );
+        }
+      },
+      // Counts only while the section crosses the middle band of the screen.
+      // These sections are tall, and a plain intersection test would hand the
+      // nav over the moment a top edge appeared and hold it long after.
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    sections.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
   }, [pathname]);
 
   return (
@@ -113,13 +152,26 @@ export function SiteHeader() {
           aria-label="Điều hướng chính"
         >
           {NAV_LEFT.map((item) => (
-            <NavLink key={item.href} item={item} pathname={pathname} />
+            <NavLink
+              key={item.href}
+              item={item}
+              pathname={pathname}
+              activeSection={activeSection}
+            />
           ))}
         </nav>
         <LogoPanel />
-        <nav className="flex items-center justify-evenly" aria-label="Liên kết phụ">
+        <nav
+          className="flex items-center justify-evenly"
+          aria-label="Liên kết phụ"
+        >
           {NAV_RIGHT.map((item) => (
-            <NavLink key={item.href} item={item} pathname={pathname} />
+            <NavLink
+              key={item.href}
+              item={item}
+              pathname={pathname}
+              activeSection={activeSection}
+            />
           ))}
         </nav>
       </div>
@@ -147,7 +199,7 @@ export function SiteHeader() {
           aria-label="Điều hướng chính"
         >
           {NAV_ALL.map((item) => {
-            const current = isCurrentPage(item.href, pathname);
+            const current = isCurrentPage(item.href, pathname, activeSection);
             return (
               <Link
                 key={item.href}
