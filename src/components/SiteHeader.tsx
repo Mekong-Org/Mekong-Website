@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BLOG_TOPICS } from "@/constants/blog-topics";
 
 const NAV_LEFT = [
   { label: "Trang chủ", href: "/" },
@@ -20,27 +21,6 @@ const NAV_RIGHT = [
 ];
 
 const NAV_ALL = [...NAV_LEFT, ...NAV_RIGHT];
-
-/**
- * Topics listed under "Bài viết". Also proxied, hence the /blog prefix.
- *
- * Written out rather than fetched: api/blog/topics needs AEO_SECRET_KEY, which
- * would make the header a server component or a loading state, and topics
- * change a few times a year. Keep this in step with design-assets/blog-header
- * .jsx, which carries the same list for the content app's own copy of the bar.
- *
- * The first topic is named as a whole question in the content app — a fine page
- * title, far too long for a menu — so the label here is the short form. Four
- * entries is the target, one per product line; below three the menu is not
- * worth opening and "Bài viết" should go back to being a plain link.
- */
-const BLOG_TOPICS = [
-  {
-    label: "Nhớt xe số & chuẩn JASO",
-    href: "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
-  },
-  { label: "Tất cả bài viết", href: "/blog/topic" },
-];
 
 /**
  * Whether a nav item is the one you are currently looking at.

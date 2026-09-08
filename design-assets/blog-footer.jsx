@@ -28,6 +28,18 @@ function Footer() {
     { label: "Chọn nhớt cho xe", href: SITE + "/#chon-nhot" },
   ];
 
+  // Same list as the header's menu. Keep the two in step, and with
+  // src/constants/blog-topics.ts in the site repo, which neither can import.
+  const BLOG_TOPICS = [
+    {
+      label: "Nhớt xe số & chuẩn JASO",
+      href:
+        SITE +
+        "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
+    },
+    { label: "Tất cả bài viết", href: SITE + "/blog/topic" },
+  ];
+
   const BODY =
     "'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif";
   const DISPLAY =
@@ -178,6 +190,13 @@ function Footer() {
         <div>
           <h2 style={heading}>Công ty</h2>
           <ul style={list}>{renderLinks(COMPANY_LINKS)}</ul>
+
+          {/* Second group in this column rather than a fifth column: four
+              already fill the row, and a fifth would squeeze the contact
+              address and the brand paragraph onto twice the lines. This is the
+              shortest column, so the topics land in space already going spare. */}
+          <h2 style={{ ...heading, marginTop: "32px" }}>Bài viết</h2>
+          <ul style={list}>{renderLinks(BLOG_TOPICS)}</ul>
         </div>
 
         <div>
