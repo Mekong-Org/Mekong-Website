@@ -113,6 +113,31 @@ function Header() {
   // to tell them apart.
   const [openTopics, setOpenTopics] = React.useState(false);
   const menuRef = React.useRef(null);
+  const closeTimer = React.useRef(null);
+
+  // Closing is deferred by a moment, and the panel is padded up to meet the
+  // label rather than floating 14px clear of it. Both are needed: the padding
+  // removes the dead strip the pointer used to cross on its way down — a gap
+  // belonging to neither the label nor the panel, so leaving the label meant
+  // leaving the menu — and the delay covers the rest, since the panel is wider
+  // than the label and hangs to its left, so reaching a row usually means
+  // cutting the corner across air outside both.
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  };
+
+  const openNow = () => {
+    cancelClose();
+    setOpenTopics(true);
+  };
+
+  const closeSoon = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpenTopics(false), 220);
+  };
+
+  React.useEffect(() => cancelClose, []);
 
   // Whether hovering means anything here. A touch browser still synthesises
   // mouseenter just before the click of a tap, so leaving the hover handlers
@@ -154,8 +179,8 @@ function Header() {
         ref={menuRef}
         className="ktm-menu"
         style={{ position: "relative", display: "flex", alignItems: "center", gap: "6px" }}
-        onMouseEnter={canHover ? () => setOpenTopics(true) : undefined}
-        onMouseLeave={canHover ? () => setOpenTopics(false) : undefined}
+        onMouseEnter={canHover ? openNow : undefined}
+        onMouseLeave={canHover ? closeSoon : undefined}
       >
         {renderPlainLink(item)}
         <button
@@ -199,44 +224,55 @@ function Header() {
           </svg>
         </button>
 
+        {/* Outer span is transparent and starts flush against the label: its
+            padding is the 14px of daylight under the panel, and being part of
+            the menu it keeps the pointer inside on the way down. */}
         <span
-          role="menu"
+          className="ktm-panel"
           hidden={!openTopics}
           style={{
             position: "absolute",
-            top: "calc(100% + 14px)",
+            top: "100%",
             left: 0,
             zIndex: 30,
-            minWidth: "240px",
-            padding: "8px",
-            borderRadius: "8px",
-            background: "#fff",
-            boxShadow: "0 12px 32px rgba(20, 20, 22, 0.22)",
+            paddingTop: "14px",
           }}
         >
-          {BLOG_TOPICS.map((topic) => (
-            <a
-              key={topic.href}
-              role="menuitem"
-              className="ktm-topic"
-              href={topic.href}
-              style={{
-                display: "block",
-                padding: "9px 12px",
-                borderRadius: "5px",
-                fontFamily: "'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif",
-                fontSize: "14px",
-                fontWeight: 500,
-                lineHeight: "20px",
-                letterSpacing: 0,
-                textTransform: "none",
-                textDecoration: "none",
-                color: "#141416",
-              }}
-            >
-              {topic.label}
-            </a>
-          ))}
+          <span
+            role="menu"
+            style={{
+              display: "block",
+              minWidth: "240px",
+              padding: "8px",
+              borderRadius: "8px",
+              background: "#fff",
+              boxShadow: "0 12px 32px rgba(20, 20, 22, 0.22)",
+            }}
+          >
+            {BLOG_TOPICS.map((topic) => (
+              <a
+                key={topic.href}
+                role="menuitem"
+                className="ktm-topic"
+                href={topic.href}
+                style={{
+                  display: "block",
+                  padding: "9px 12px",
+                  borderRadius: "5px",
+                  fontFamily: "'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  lineHeight: "20px",
+                  letterSpacing: 0,
+                  textTransform: "none",
+                  textDecoration: "none",
+                  color: "#141416",
+                }}
+              >
+                {topic.label}
+              </a>
+            ))}
+          </span>
         </span>
       </span>
     ) : (
@@ -293,7 +329,7 @@ function Header() {
 /* The panel hangs off the left edge of "Bài viết", which is the last third of
    the bar — near the right edge it would run off screen, so flip it. */
 @media (min-width: 901px) {
-  .ktm-menu [role="menu"] { left: auto !important; right: 0 !important; }
+  .ktm-panel { left: auto !important; right: 0 !important; }
 }
 
 /* Under ~900px the three columns squeeze the wordmark to nothing, so the bar

@@ -132,6 +132,34 @@ function NavMenu({
   const [open, setOpen] = useState(false);
   const [canHover, setCanHover] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /**
+   * Closing is deferred by a moment, and the panel is padded up to meet the
+   * label rather than floating 14px clear of it.
+   *
+   * Both are needed. The padding removes the dead strip the pointer used to
+   * cross on its way down — a gap belonging to neither the label nor the panel,
+   * so leaving the label meant leaving the menu. The delay covers the rest:
+   * the panel is wider than the label and hangs to its left, so reaching a row
+   * often means cutting the corner across air that is still outside both.
+   */
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  };
+
+  const openNow = () => {
+    cancelClose();
+    setOpen(true);
+  };
+
+  const closeSoon = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), 220);
+  };
+
+  useEffect(() => cancelClose, []);
 
   useEffect(() => {
     const query = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -161,8 +189,8 @@ function NavMenu({
     <div
       ref={ref}
       className="relative flex items-center gap-1.5"
-      onMouseEnter={canHover ? () => setOpen(true) : undefined}
-      onMouseLeave={canHover ? () => setOpen(false) : undefined}
+      onMouseEnter={canHover ? openNow : undefined}
+      onMouseLeave={canHover ? closeSoon : undefined}
     >
       <NavLink item={item} pathname={pathname} activeSection={activeSection} />
       <button
@@ -190,19 +218,21 @@ function NavMenu({
         </svg>
       </button>
 
-      <div
-        hidden={!open}
-        className="absolute top-[calc(100%+14px)] right-0 z-30 min-w-[240px] rounded-lg bg-white p-2 shadow-[0_12px_32px_rgba(20,20,22,0.22)]"
-      >
-        {BLOG_TOPICS.map((topic) => (
-          <Link
-            key={topic.href}
-            href={topic.href}
-            className="block rounded-sm px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-brand-100"
-          >
-            {topic.label}
-          </Link>
-        ))}
+      {/* Outer box is transparent and starts flush against the label: its
+          padding is the 14px of daylight under the panel, and being part of
+          the menu it keeps the pointer inside on the way down. */}
+      <div hidden={!open} className="absolute top-full right-0 z-30 pt-3.5">
+        <div className="min-w-[240px] rounded-lg bg-white p-2 shadow-[0_12px_32px_rgba(20,20,22,0.22)]">
+          {BLOG_TOPICS.map((topic) => (
+            <Link
+              key={topic.href}
+              href={topic.href}
+              className="block rounded-sm px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-brand-100"
+            >
+              {topic.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
