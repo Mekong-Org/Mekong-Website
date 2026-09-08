@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro } from "next/font/google";
+import { Be_Vietnam_Pro, Big_Shoulders } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { BASE_URL, GOOGLE_VERIFICATION_TOKENS } from "@/constants/site";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { ScrollFX } from "@/components/ScrollFX";
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
@@ -11,31 +14,43 @@ const beVietnamPro = Be_Vietnam_Pro({
   display: "swap",
 });
 
+// Condensed display face for headlines, nav and product names.
+const bigShoulders = Big_Shoulders({
+  variable: "--font-big-shoulders",
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  // No fallback metrics published for this family — skip the size-adjust
+  // fallback rather than warn on every build.
+  adjustFontFallback: false,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "GCW - Đối Tác Phát Triển Lãnh Đạo & Hiệu Suất Tổ Chức",
-    template: "%s | GCW",
+    default: "Katsuma - Nhớt Xe Máy Chính Hãng Từ Nhà Máy Hóa Dầu Mekong",
+    template: "%s | Katsuma",
   },
   description:
-    "GCW (GCW JSC) là đối tác phát triển lãnh đạo và hiệu suất tổ chức, đồng hành thực thi cùng doanh nghiệp Việt Nam: phát triển lãnh đạo, xây dựng văn hoá tin cậy và tạo kết quả đột phá.",
+    "Katsuma phân phối nhớt xe máy Access và Tapec do Hóa Dầu Mekong sản xuất: nhớt xe số, nhớt xe tay ga, dầu hộp số. Tìm đúng loại nhớt cho xe và đăng ký làm đại lý.",
   keywords: [
-    "GCW",
-    "GCW JSC",
-    "phát triển lãnh đạo",
-    "đào tạo lãnh đạo doanh nghiệp",
-    "xây dựng văn hoá tin cậy",
-    "thực thi chiến lược 4DX",
-    "coaching lãnh đạo",
-    "hiệu suất tổ chức",
+    "nhớt Katsuma",
+    "nhớt xe máy",
+    "nhớt xe số",
+    "nhớt xe tay ga",
+    "dầu hộp số xe tay ga",
+    "nhớt Access",
+    "nhớt Tapec",
+    "đại lý nhớt xe máy",
+    "Hóa Dầu Mekong",
   ],
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    siteName: "GCW",
-    title: "GCW - Đối Tác Phát Triển Lãnh Đạo & Hiệu Suất Tổ Chức",
+    siteName: "Katsuma",
+    title: "Katsuma - Nhớt Xe Máy Chính Hãng Từ Nhà Máy Hóa Dầu Mekong",
     description:
-      "GCW mang đến lợi thế con người cho chiến lược của bạn — đồng hành thực thi phát triển lãnh đạo cùng doanh nghiệp Việt Nam, không chỉ tư vấn lý thuyết.",
+      "Nhớt xe số, nhớt xe tay ga và dầu hộp số Katsuma - sản xuất tại nhà máy Hóa Dầu Mekong, phân phối qua hệ thống đại lý và tiệm sửa xe trên toàn quốc.",
   },
   verification: {
     google: GOOGLE_VERIFICATION_TOKENS,
@@ -54,21 +69,31 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${beVietnamPro.variable} h-full antialiased`}
+      className={`${beVietnamPro.variable} ${bigShoulders.variable} h-full antialiased`}
+      // The <head> script below adds a class here before React hydrates, which
+      // is a server/client difference by design — not a bug to warn about.
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-white text-ink-soft">
-        {children}
-        <Script id="rocketchat-livechat" strategy="afterInteractive">
-          {`(function(w, d, s, u) {
-    w.RocketChat = function(c) { w.RocketChat._.push(c) }; w.RocketChat._ = []; w.RocketChat.url = u;
-    var h = d.getElementsByTagName(s)[0], j = d.createElement(s);
-    j.async = true; j.src = 'https://livechat.jarvis.cx/livechat/rocketchat-livechat.min.js?_=201903270000';
-    h.parentNode.insertBefore(j, h);
-    w.ticketplus = w.ticketplus || {};
-    w.ticketplus.tenantid = 'ca965aac-e908-408e-bc8b-15c93eb31233';
-    w.RocketChat(function() { this.setLanguage('vi-VN') });
-  })(window, document, 'script', 'https://livechat.jarvis.cx/livechat');`}
-        </Script>
+      <head>
+        {/* Marks the document as animation-capable before first paint, so the
+            "hidden until scrolled into view" states only apply when the scroll
+            engine is actually there to reveal them again. It has to be a plain
+            inline <script> in <head>: a <script> is not valid as a direct child
+            of <html>, and next/script's beforeInteractive only runs once its
+            own runtime boots, which is after the first paint. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("fx-on")`,
+          }}
+        />
+      </head>
+      <body className="flex min-h-full flex-col bg-white text-ink-soft">
+        <ScrollFX />
+        <SiteHeader />
+        <div className="flex flex-1 flex-col pt-[70px] lg:pt-[86px]">
+          {children}
+        </div>
+        <SiteFooter />
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>
             <Script

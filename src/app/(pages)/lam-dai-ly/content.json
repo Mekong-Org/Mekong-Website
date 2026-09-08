@@ -1,0 +1,62 @@
+{
+  "title": "Làm đại lý nhớt Katsuma",
+  "metaDescription": "Chính sách đại lý nhớt xe máy Katsuma: chiết khấu theo sản lượng, bảng hiệu và kệ trưng bày, giao hàng tận tiệm. Đăng ký để nhân viên khu vực gọi lại.",
+  "hero": {
+    "heading": "Nhập nhớt Katsuma về bán",
+    "subheading": "Hàng ra thẳng từ nhà máy Hóa Dầu Mekong, biên lợi nhuận tốt, có hỗ trợ trưng bày và khuyến mãi theo mùa.",
+    "image": "/images/site/cham-xe.jpg",
+    "imageAlt": "Đội ngũ Katsuma tại một tiệm sửa xe"
+  },
+  "benefits": {
+    "heading": "Quyền lợi đại lý",
+    "items": [
+      {
+        "title": "Chiết khấu theo sản lượng",
+        "body": "Càng lấy nhiều, chiết khấu càng tốt. Chính sách rõ ràng theo từng bậc, không thương lượng lại mỗi đơn."
+      },
+      {
+        "title": "Bảng hiệu và kệ trưng bày",
+        "body": "Hỗ trợ bảng hiệu tiệm, kệ để chai và standee khuyến mãi — tiệm nhìn chuyên nghiệp hơn, khách dễ nhận ra hàng chính hãng."
+      },
+      {
+        "title": "Giao hàng tận tiệm",
+        "body": "Nhân viên khu vực nhận đơn qua điện thoại hoặc Zalo, giao tận nơi và hỗ trợ đổi trả hàng lỗi bao bì."
+      },
+      {
+        "title": "Khuyến mãi theo mùa",
+        "body": "Chương trình thay nhớt tặng quà vào mùa cao điểm, kèm vật phẩm quảng cáo để tiệm kéo khách."
+      }
+    ]
+  },
+  "process": {
+    "heading": "Bốn bước để bắt đầu",
+    "steps": [
+      {
+        "title": "Đăng ký",
+        "body": "Điền tên tiệm, số điện thoại và tỉnh/thành. Mất chưa tới một phút."
+      },
+      {
+        "title": "Nhân viên gọi lại",
+        "body": "Nhân viên phụ trách khu vực liên hệ trong vòng 24 giờ làm việc để xác nhận nhu cầu."
+      },
+      {
+        "title": "Báo giá và đơn đầu tiên",
+        "body": "Nhận bảng giá theo bậc chiết khấu, chốt danh mục và số lượng cho đơn mở hàng."
+      },
+      {
+        "title": "Giao hàng và lắp bảng hiệu",
+        "body": "Giao hàng tận tiệm, lắp bảng hiệu và kệ trưng bày, bàn giao vật phẩm bán hàng."
+      }
+    ]
+  },
+  "form": {
+    "heading": "Đăng ký làm đại lý",
+    "body": "Để lại thông tin, nhân viên khu vực sẽ gọi lại trong 24 giờ làm việc. Nếu cần gấp, gọi thẳng số hotline bên dưới.",
+    "note": "Thông tin chỉ dùng để liên hệ về việc phân phối sản phẩm."
+  },
+  "contact": {
+    "phone": "02723 635 168",
+    "phoneHref": "tel:02723635168",
+    "email": "info@mekongpetro.com"
+  }
+}

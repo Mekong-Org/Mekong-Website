@@ -1,0 +1,276 @@
+{
+  "title": "Sản phẩm nhớt xe máy Katsuma",
+  "metaDescription": "Toàn bộ nhớt xe máy Katsuma: nhớt xe số Access và Tapec, nhớt xe tay ga Access Scooter, dầu hộp số Access Gear — kèm thông số JASO, API, SAE.",
+  "hero": {
+    "eyebrow": "Danh mục sản phẩm",
+    "heading": "Nhớt xe máy Katsuma"
+  },
+  "tabs": [
+    {
+      "id": "xe-so",
+      "label": "Nhớt xe số",
+      "hero": {
+        "banner": "/images/site/nhom-xe-so.png",
+        "bannerAlt": "Dải sản phẩm nhớt xe số Access của Hóa Dầu Mekong",
+        "title": "Nhớt xe số",
+        "description": "Bảo vệ ly hợp · Sang số êm · Bền từng cây số"
+      },
+      "categories": [
+        {
+          "id": "cao-cap",
+          "title": "Dòng cao cấp",
+          "tagLabel": "Cao cấp",
+          "tagBgColor": "#96610f",
+          "products": [
+            {
+              "slug": "access-9000-extreme",
+              "name": "Access 9000 Extreme",
+              "image": "/images/products/access-9000-extreme.png",
+              "viscosity": "15W-40",
+              "standards": ["JASO MA2", "API SL"],
+              "packaging": "Chai 0.8L · chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Dòng cao cấp nhất cho xe số: bảo vệ ly hợp, chống mài mòn, kéo dài thời gian thay nhớt.",
+              "description": "Access 9000 Extreme là dòng dầu động cơ thế hệ mới được phát triển dành riêng cho xe máy số. Sản phẩm giúp tăng cường khả năng bảo vệ ly hợp và chống mài mòn, hỗ trợ động cơ vận hành hiệu quả đồng thời bảo vệ các chi tiết quan trọng. Độ bền cao giúp giảm hao hụt dầu trong quá trình sử dụng và kéo dài thời gian thay nhớt.",
+              "benefitsIntro": "Access 9000 Extreme được phát triển nhằm mang lại khả năng bảo vệ động cơ, truyền động ổn định và hiệu suất vận hành bền bỉ cho xe máy số:",
+              "benefits": [
+                "Giúp ngăn ngừa hiện tượng trượt ly hợp và tối ưu hiệu quả truyền động trên xe máy số và xe tay côn.",
+                "Độ ổn định nhiệt và khả năng chống oxy hóa tốt, góp phần kéo dài thời gian sử dụng dầu.",
+                "Bảo vệ và làm sạch động cơ bằng cách kiểm soát cặn hình thành trong quá trình vận hành.",
+                "Hỗ trợ động cơ vận hành ổn định và duy trì hiệu quả bôi trơn trong điều kiện sử dụng hằng ngày."
+              ]
+            },
+            {
+              "slug": "access-3000-pro",
+              "name": "Access 3000 Pro+",
+              "image": "/images/products/access-3000-pro.png",
+              "viscosity": "15W-40",
+              "standards": ["JASO MA2", "API SJ"],
+              "packaging": "Chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Khuyên dùng cho xe đời mới: chống mài mòn, giữ máy sạch, ổn định trên nhiều địa hình.",
+              "description": "Access 3000 Pro+ là dầu động cơ được phát triển dành riêng cho xe máy số. Với hệ dầu gốc và phụ gia chất lượng cao, sản phẩm giúp tăng cường khả năng bảo vệ động cơ trước mài mòn trong nhiều điều kiện vận hành và địa hình khác nhau. Sản phẩm được khuyến nghị cho các dòng xe mới.",
+              "benefitsIntro": "Access 3000 Pro+ được phát triển nhằm tăng cường khả năng bảo vệ động cơ, duy trì độ sạch và hỗ trợ vận hành ổn định cho xe máy số:",
+              "benefits": [
+                "Bảo vệ động cơ khỏi ăn mòn và mài mòn do ma sát và các hợp chất axit phát sinh trong quá trình vận hành.",
+                "Độ ổn định nhiệt và khả năng chống oxy hóa tốt, giúp hạn chế quá trình lão hóa dầu và kéo dài thời gian sử dụng.",
+                "Khả năng làm sạch động cơ hiệu quả, giúp kiểm soát cặn hình thành trong quá trình đốt cháy nhiên liệu.",
+                "Hỗ trợ động cơ vận hành ổn định trong nhiều điều kiện sử dụng khác nhau."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tam-trung",
+          "title": "Dòng tầm trung",
+          "tagLabel": "Tầm trung",
+          "tagBgColor": "#d99522",
+          "products": [
+            {
+              "slug": "access-3000",
+              "name": "Access 3000",
+              "image": "/images/products/access-3000.png",
+              "viscosity": "20W-50",
+              "standards": ["JASO MA2", "API SG"],
+              "packaging": "Chai 0.8L · chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Cân bằng giữa bảo vệ và giá: sang số êm, truyền động ổn định cho xe chạy hằng ngày.",
+              "description": "Access 3000 được pha chế với công thức có độ nhớt tối ưu, giúp bảo vệ các chi tiết quan trọng của động cơ trước mài mòn và ăn mòn. Sản phẩm hỗ trợ truyền động hiệu quả và sang số êm hơn, góp phần duy trì khả năng vận hành ổn định cho xe máy số.",
+              "benefitsIntro": "Access 3000 được phát triển nhằm bảo vệ động cơ và hệ thống truyền động, đồng thời duy trì khả năng vận hành ổn định cho xe máy số:",
+              "benefits": [
+                "Góp phần kéo dài tuổi thọ động cơ và các bộ phận truyền động như ly hợp, hộp số.",
+                "Khả năng làm sạch tốt, giúp kiểm soát và loại bỏ cặn có thể ảnh hưởng đến hoạt động của động cơ.",
+                "Tối ưu hiệu quả truyền động nhờ khả năng hỗ trợ chống trượt ly hợp.",
+                "Hỗ trợ xe vận hành ổn định trong điều kiện sử dụng hằng ngày."
+              ]
+            },
+            {
+              "slug": "tapec-xtreme-2",
+              "name": "Tapec Xtreme 2",
+              "image": "/images/products/tapec-xtreme-2.png",
+              "viscosity": "20W-50",
+              "standards": ["JASO MA2", "API SG"],
+              "packaging": "Chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Kiểm soát ma sát cho ly hợp đóng mở êm, sang số nhẹ và tiết kiệm nhiên liệu hơn.",
+              "description": "Tapec Xtreme 2 được pha chế từ dầu gốc khoáng kết hợp với hệ phụ gia chuyên dụng đạt tiêu chuẩn API, giúp động cơ vận hành hiệu quả đồng thời bảo vệ khỏi mài mòn và oxy hóa. Công nghệ kiểm soát ma sát giúp ly hợp đóng mở êm ái, sang số thuận lợi, tối ưu hiệu quả truyền động và góp phần giảm tiêu hao nhiên liệu.",
+              "benefitsIntro": "Tapec Xtreme 2 được phát triển nhằm bảo vệ động cơ, tối ưu hiệu quả truyền động và duy trì khả năng vận hành ổn định cho xe máy số:",
+              "benefits": [
+                "Khả năng chống oxy hóa cao giúp duy trì độ nhớt ổn định trong suốt quá trình sử dụng.",
+                "Góp phần kéo dài tuổi thọ động cơ và các bộ phận truyền động liên quan.",
+                "Hỗ trợ nâng cao hiệu suất vận hành nhờ khả năng tối ưu hóa ma sát của bộ ly hợp.",
+                "Giúp quá trình đóng mở ly hợp và sang số diễn ra êm ái hơn."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pho-thong",
+          "title": "Dòng phổ thông",
+          "tagLabel": "Phổ thông",
+          "tagBgColor": "#5e6b7a",
+          "products": [
+            {
+              "slug": "access-2000",
+              "name": "Access 2000",
+              "image": "/images/products/access-2000.png",
+              "viscosity": "20W-50",
+              "standards": ["API SF"],
+              "packaging": "Chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Dành cho xe đã chạy nhiều năm: bảo vệ piston, xy lanh, hộp số với chi phí hợp lý.",
+              "description": "Access 2000 được pha chế từ dầu gốc và phụ gia chất lượng cao, giúp bảo vệ các chi tiết quan trọng của động cơ như piston, xy lanh, hộp số và các bộ phận chịu tải. Sản phẩm được thiết kế phù hợp cho các động cơ đã sử dụng nhiều năm, mang lại hiệu quả bảo vệ và tính kinh tế trong quá trình vận hành.",
+              "benefitsIntro": "Access 2000 được phát triển nhằm bảo vệ động cơ và duy trì khả năng vận hành ổn định cho các dòng xe đã sử dụng nhiều năm:",
+              "benefits": [
+                "Bảo vệ động cơ khỏi các tác nhân gây mài mòn và ăn mòn phát sinh trong quá trình vận hành.",
+                "Hỗ trợ duy trì hiệu suất làm việc cho các động cơ đã hoạt động nhiều năm.",
+                "Góp phần bảo vệ các chi tiết quan trọng của động cơ và hệ thống truyền động.",
+                "Mang lại giải pháp bôi trơn kinh tế cho nhu cầu sử dụng hằng ngày."
+              ]
+            },
+            {
+              "slug": "access-1000",
+              "name": "Access 1000",
+              "image": "/images/products/access-1000.png",
+              "viscosity": "20W-50",
+              "standards": ["API SE"],
+              "packaging": "Chai 0.8L · chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Chai phổ thông giá tốt, xoay vòng nhanh tại tiệm — hợp xe chạy hằng ngày.",
+              "description": "Access 1000 được pha chế với độ nhớt tối ưu nhằm bảo vệ các chi tiết quan trọng của động cơ như piston, xy lanh, hộp số và các bộ phận chịu tải. Sản phẩm mang đến khả năng bảo vệ ổn định cùng hiệu quả kinh tế phù hợp với nhu cầu sử dụng phổ thông.",
+              "benefitsIntro": "Access 1000 được phát triển nhằm bảo vệ động cơ và duy trì khả năng vận hành ổn định cho xe máy số trong quá trình sử dụng hằng ngày:",
+              "benefits": [
+                "Bảo vệ động cơ khỏi các tác nhân gây mài mòn và ăn mòn phát sinh trong quá trình vận hành.",
+                "Hỗ trợ duy trì hiệu suất làm việc cho các động cơ đã hoạt động nhiều năm.",
+                "Góp phần bảo vệ các chi tiết quan trọng của động cơ và hệ thống truyền động.",
+                "Mang lại giải pháp bôi trơn kinh tế cho nhu cầu sử dụng thường xuyên."
+              ]
+            },
+            {
+              "slug": "tapec-active",
+              "name": "Tapec Active",
+              "image": "/images/products/tapec-active.png",
+              "viscosity": "20W-50",
+              "standards": ["API SE"],
+              "packaging": "Chai 0.8L · chai 1.0L",
+              "recommendedFor": "Các loại xe máy số 4 kỳ",
+              "summary": "Công thức cho động cơ đã sử dụng nhiều năm, hiệu quả kinh tế cho nhu cầu phổ thông.",
+              "description": "Tapec Active được thiết kế dành cho các động cơ xe máy số đã sử dụng nhiều năm, giúp bảo vệ các chi tiết quan trọng như piston, xy lanh, hộp số và các bộ phận chịu tải. Sản phẩm mang lại hiệu quả kinh tế cao, phù hợp với nhu cầu sử dụng phổ thông.",
+              "benefitsIntro": "Tapec Active được phát triển nhằm bảo vệ động cơ và duy trì hiệu quả vận hành cho các xe máy số đã sử dụng nhiều năm:",
+              "benefits": [
+                "Khả năng chống mài mòn và chống oxy hóa tốt.",
+                "Công thức phù hợp với động cơ đã hoạt động nhiều năm.",
+                "Hỗ trợ động cơ vận hành ổn định trong nhu cầu sử dụng hằng ngày."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "boi-tron-khac",
+          "title": "Dầu bôi trơn tải trọng thấp",
+          "tagLabel": "Bôi trơn",
+          "tagBgColor": "#8a8f98",
+          "products": [
+            {
+              "slug": "tacoma-50",
+              "name": "Tacoma 50",
+              "image": "/images/products/tacoma-50.jpg",
+              "viscosity": "SAE 50",
+              "standards": [],
+              "packaging": "Chai 1.0L",
+              "recommendedFor": "Máy móc, thiết bị hoạt động trong điều kiện tải trọng thấp",
+              "summary": "Dầu bôi trơn đa dụng cho máy móc, thiết bị làm việc ở tải trọng thấp.",
+              "description": "Tacoma 50 được pha chế từ dầu gốc khoáng kết hợp với hệ phụ gia chuyên dụng giúp tăng cường khả năng bôi trơn, giảm ma sát và hạn chế mài mòn. Sản phẩm phù hợp cho các loại máy móc và thiết bị hoạt động trong điều kiện tải trọng thấp.",
+              "benefitsIntro": "Tacoma 50 được phát triển nhằm duy trì khả năng bôi trơn ổn định và bảo vệ hiệu quả các chi tiết cơ khí trong điều kiện tải trọng thấp:",
+              "benefits": [
+                "Giúp giảm ma sát giữa các bề mặt chuyển động.",
+                "Hạn chế mài mòn và ăn mòn trong quá trình vận hành.",
+                "Phù hợp với các thiết bị làm việc trong điều kiện tải trọng thấp.",
+                "Hỗ trợ máy móc vận hành ổn định và hiệu quả."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xe-tay-ga",
+      "label": "Nhớt xe tay ga",
+      "hero": {
+        "banner": "/images/site/nhom-xe-tay-ga.png",
+        "bannerAlt": "Nhớt xe tay ga Access Scooter của Hóa Dầu Mekong",
+        "title": "Nhớt xe tay ga",
+        "description": "Chịu nhiệt tốt · Máy êm · Dành riêng cho xe ga 4 kỳ"
+      },
+      "categories": [
+        {
+          "id": "dau-dong-co-xe-ga",
+          "title": "Dầu động cơ xe tay ga",
+          "tagLabel": "Xe tay ga",
+          "tagBgColor": "#00a651",
+          "products": [
+            {
+              "slug": "access-scooter",
+              "name": "Access Scooter",
+              "image": "/images/products/access-scooter.png",
+              "viscosity": "20W-40",
+              "standards": ["API SJ"],
+              "packaging": "Chai 0.8L · chai 1.0L",
+              "recommendedFor": "Các loại xe tay ga 4 kỳ",
+              "summary": "Pha chế riêng cho xe tay ga 4 kỳ: ma sát thấp, chịu nhiệt tốt, máy chạy êm.",
+              "description": "Access Scooter được pha chế chuyên dụng cho các loại xe tay ga 4 kỳ. Công thức tối ưu giúp động cơ vận hành hiệu quả và mang lại cảm giác vận hành ổn định. Độ ổn định nhiệt và khả năng chống oxy hóa tốt giúp bảo vệ động cơ khỏi mài mòn, ăn mòn và góp phần kéo dài thời gian sử dụng dầu.",
+              "benefitsIntro": "Access Scooter được phát triển nhằm tối ưu hiệu quả vận hành và bảo vệ động cơ cho các dòng xe tay ga 4 kỳ:",
+              "benefits": [
+                "Độ ma sát thấp giúp tối ưu hiệu suất hoạt động của xe tay ga.",
+                "Độ ổn định nhiệt và khả năng chống oxy hóa tốt, góp phần kéo dài thời gian sử dụng dầu.",
+                "Hỗ trợ bảo vệ các chi tiết động cơ khỏi mài mòn trong quá trình vận hành.",
+                "Giúp động cơ vận hành ổn định và êm ái hơn."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hop-so-xe-ga",
+      "label": "Dầu hộp số xe ga",
+      "hero": {
+        "banner": "/images/site/nhom-hop-so.png",
+        "bannerAlt": "Dầu hộp số xe tay ga Access Gear của Hóa Dầu Mekong",
+        "title": "Dầu hộp số xe tay ga",
+        "description": "Bảo vệ bánh răng · Chịu tải cao · Thay kèm nhớt máy"
+      },
+      "categories": [
+        {
+          "id": "dau-hop-so",
+          "title": "Dầu hộp số (láp) xe tay ga",
+          "tagLabel": "Hộp số",
+          "tagBgColor": "#d32b1e",
+          "products": [
+            {
+              "slug": "access-gear",
+              "name": "Access Gear",
+              "image": "/images/products/access-gear.png",
+              "viscosity": "75W-90",
+              "standards": ["ZF T-ML 07A", "API GL-5"],
+              "packaging": "Tuýp 120ml",
+              "recommendedFor": "Hệ thống hộp số bánh sau của các loại xe máy tay ga",
+              "summary": "Dầu láp cho hộp số bánh sau xe tay ga: chịu tải cao, chống rỗ bề mặt bánh răng.",
+              "description": "Access Gear là dầu bôi trơn chuyên dùng cho hệ thống truyền động bánh sau của xe tay ga. Sản phẩm được pha chế từ dầu gốc tinh chế và hệ phụ gia chất lượng cao, giúp duy trì khả năng vận hành ổn định trong nhiều điều kiện sử dụng khác nhau. Các phụ gia tạo lớp bảo vệ trên bề mặt kim loại, góp phần bảo vệ bánh răng khỏi mài mòn, rỗ bề mặt và hư hỏng trong quá trình hoạt động.",
+              "benefitsIntro": "Access Gear được phát triển nhằm bảo vệ hệ thống truyền động bánh sau và duy trì hiệu quả bôi trơn cho xe tay ga:",
+              "benefits": [
+                "Được bổ sung phụ gia chống ăn mòn, phù hợp với các hệ thống có chi tiết bằng nhôm.",
+                "Công thức được tối ưu cho điều kiện khí hậu và vận hành tại Việt Nam.",
+                "Khả năng chịu tải cao, giúp hệ thống hoạt động ổn định trong nhiều điều kiện sử dụng khác nhau.",
+                "Bảo vệ bề mặt bánh răng khỏi mài mòn và rỗ bề mặt do chịu áp lực cao liên tục.",
+                "Hạn chế quá trình oxy hóa và suy giảm chất lượng dầu, góp phần kéo dài thời gian sử dụng.",
+                "Ngăn ngừa ăn mòn và rỉ sét do tác động từ môi trường vận hành.",
+                "Tối ưu hiệu quả truyền động của hệ thống láp sau xe tay ga, đồng thời duy trì khả năng bôi trơn ổn định trong mọi điều kiện vận hành."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

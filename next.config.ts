@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Dev-only badge, and it spends its time reporting hydration mismatches that
+  // browser extensions cause by rewriting the DOM before React boots (e.g.
+  // Bitdefender's bis_skin_checked attribute) — noise we cannot fix from here.
+  // Real breakage still interrupts: build failures and uncaught runtime errors
+  // keep showing their overlay. No effect on the production build.
+  devIndicators: false,
   experimental: {
     // middleware.ts matches /api/admin/:path*, which makes Next clone the
     // request body for the middleware layer. The default 10MB clone limit

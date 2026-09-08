@@ -1,7 +1,121 @@
 {
-  "title": "Trang chủ",
-  "metaDescription": "Trang tạm thời của website. Nội dung chính thức đang được xây dựng — vui lòng quay lại sau, hoặc liên hệ với chúng tôi nếu bạn cần hỗ trợ ngay.",
-  "eyebrow": "Đang xây dựng",
-  "heading": "Website đang được hoàn thiện",
-  "subheading": "Đây là trang tạm. Nội dung và các trang chi tiết sẽ được bổ sung trong thời gian tới."
+  "title": "Katsuma - Nhớt xe máy chính hãng từ nhà máy Hóa Dầu Mekong",
+  "metaDescription": "Nhớt xe số, nhớt xe tay ga và dầu hộp số Katsuma do Hóa Dầu Mekong sản xuất. Chọn đúng loại nhớt cho xe của bạn hoặc đăng ký làm đại lý ngay.",
+  "hero": {
+    "image": "/images/site/nhom-xe-so.png",
+    "imageAlt": "Người đi xe máy trên đường quê Việt Nam",
+    "eyebrow": "Nhớt xe máy · Sản xuất tại Việt Nam",
+    "heading": "Bền từng cây số",
+    "subheading": "Nhớt xe máy Katsuma do nhà máy Hóa Dầu Mekong sản xuất — bảo vệ động cơ trong đúng điều kiện đường phố Việt Nam: kẹt xe, nắng nóng, chở nặng.",
+    "primaryCta": {
+      "label": "Chọn nhớt cho xe của bạn",
+      "href": "#chon-nhot"
+    },
+    "secondaryCta": {
+      "label": "Đăng ký làm đại lý",
+      "href": "/lam-dai-ly"
+    },
+    "scrollCue": "Kéo xuống để khám phá thêm"
+  },
+  "marquee": "Katsuma · Bền từng cây số · Nhớt xe máy chính hãng",
+  "vehicleTypes": {
+    "heading": "Xe của bạn là xe gì?",
+    "items": [
+      {
+        "id": "xe-so",
+        "label": "Xe số",
+        "note": "8 sản phẩm · Access & Tapec",
+        "image": "/images/site/nhom-xe-so.png",
+        "imageAlt": "Xe số chạy trên đường"
+      },
+      {
+        "id": "xe-tay-ga",
+        "label": "Xe tay ga",
+        "note": "Access Scooter · API SJ 20W-40",
+        "image": "/images/site/nhom-xe-tay-ga.png",
+        "imageAlt": "Xe tay ga trên phố"
+      },
+      {
+        "id": "hop-so-xe-ga",
+        "label": "Dầu hộp số xe ga",
+        "note": "Access Gear · tuýp 120ml",
+        "image": "/images/site/nhom-hop-so.png",
+        "imageAlt": "Bánh răng hộp số được bôi trơn bằng dầu nhớt"
+      }
+    ]
+  },
+  "picker": {
+    "heading": "Chọn đúng nhớt trong 10 giây",
+    "note": "Gợi ý mang tính tham khảo. Với xe đời mới hoặc xe đã đi trên 50.000 km, hỏi thêm thợ hoặc đại lý Katsuma gần nhất."
+  },
+  "featured": {
+    "heading": "Sản phẩm nổi bật",
+    "slugs": [
+      "access-9000-extreme",
+      "access-3000-pro",
+      "access-scooter",
+      "access-gear"
+    ]
+  },
+  "technology": {
+    "heading": "Bốn việc mỗi chai nhớt phải làm được",
+    "image": "/images/site/nhom-hop-so.png",
+    "imageAlt": "Dầu nhớt bôi trơn bánh răng kim loại",
+    "items": [
+      {
+        "title": "Không trượt ly hợp",
+        "body": "Các chai đạt chuẩn JASO MA2 giữ ly hợp bám tốt, xe sang số nhẹ và không bị hụt ga khi tăng tốc."
+      },
+      {
+        "title": "Chống mài mòn",
+        "body": "Phụ gia tạo màng bảo vệ piston, xy lanh và hộp số — những chi tiết đắt tiền nhất trong động cơ."
+      },
+      {
+        "title": "Chịu nhiệt, không loãng",
+        "body": "Độ ổn định nhiệt và khả năng chống oxy hóa giúp nhớt giữ độ nhớt khi kẹt xe giữa trưa nắng."
+      },
+      {
+        "title": "Giữ máy sạch",
+        "body": "Khả năng tẩy rửa kiểm soát cặn sinh ra khi đốt nhiên liệu, giúp máy chạy êm và bền hơn."
+      }
+    ]
+  },
+  "stats": {
+    "heading": "Sản xuất tại nhà máy Hóa Dầu Mekong",
+    "subheading": "Katsuma không thuê gia công. Mọi chai nhớt đều ra từ nhà máy của công ty mẹ tại Tây Ninh.",
+    "items": [
+      {
+        "value": "26",
+        "unit": "năm",
+        "label": "Kinh nghiệm sản xuất dầu nhớt"
+      },
+      {
+        "value": "38.084",
+        "unit": "m²",
+        "label": "Diện tích nhà máy"
+      },
+      {
+        "value": "34.000",
+        "unit": "tấn/năm",
+        "label": "Công suất pha chế"
+      }
+    ]
+  },
+  "dealerCta": {
+    "eyebrow": "Dành cho đại lý và tiệm sửa xe",
+    "heading": "Nhập nhớt Katsuma về bán",
+    "body": "Biên lợi nhuận tốt, hàng ra thẳng từ nhà máy, có bảng hiệu và kệ trưng bày. Để lại số điện thoại, nhân viên khu vực sẽ gọi lại trong 24 giờ.",
+    "image": "/images/site/cham-xe.jpg",
+    "imageAlt": "Tiệm sửa xe trưng bày sản phẩm Katsuma",
+    "cta": {
+      "label": "Xem chính sách đại lý",
+      "href": "/lam-dai-ly"
+    },
+    "points": [
+      "Chiết khấu theo sản lượng",
+      "Bảng hiệu và kệ trưng bày",
+      "Giao hàng tận tiệm",
+      "Hỗ trợ khuyến mãi theo mùa"
+    ]
+  }
 }

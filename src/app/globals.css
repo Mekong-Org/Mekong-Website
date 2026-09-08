@@ -1,47 +1,47 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
-/* Brand tokens (Tailwind v4 @theme — generates utilities like bg-brand-600) */
+/* Brand tokens (Tailwind v4 @theme — generates utilities like bg-brand-600).
+   The palette is taken from the physical product: Access bottles are gold /
+   amber with a black cap, a red "DÀNH CHO XE SỐ" arrow band and the green-
+   yellow Mekong star. Amber is therefore the accent, red the call-to-action,
+   Mekong green the parent-company mark. */
 @theme {
-  /* Primary brand blue-violet scale (brand-600 = #3253ff) — matches the
-     reference brand's vivid CTA/accent blue, not a muted corporate navy. */
-  --color-brand-50: #eef1ff;
-  --color-brand-100: #dfe3ff;
-  --color-brand-200: #c0c9ff;
-  --color-brand-300: #97a3ff;
-  --color-brand-400: #6b78ff;
-  --color-brand-500: #4658ff;
-  --color-brand-600: #3253ff;
-  --color-brand-700: #2a45e6;
-  --color-brand-800: #2138b8;
-  --color-brand-900: #182873;
+  --color-brand-50: #fdf8ec;
+  --color-brand-100: #faedcf;
+  --color-brand-200: #f4d99b;
+  --color-brand-300: #eec263;
+  --color-brand-400: #e9ae3c;
+  --color-brand-500: #d99522;
+  --color-brand-600: #bd7d13;
+  --color-brand-700: #96610f;
+  --color-brand-800: #6f4708;
+  --color-brand-900: #4a2f04;
 
-  /* Accent navy (CTA band — darker than brand for section contrast) */
-  --color-blue-cta: #182873;
+  /* Red arrow band from the label — reserved for calls to action. */
+  --color-cta: #d32b1e;
+  --color-cta-dark: #a81f15;
 
-  /* Ink / neutrals */
-  --color-ink: #1e2126;
-  --color-ink-soft: #3f4650;
-  --color-muted: #64748b;
-  --color-surface: #f7f9fb;
-  --color-surface-2: #eef1f5;
-  --color-surface-3: #f4f5f7;
-  --color-footer-light: #e7ebf0;
-  --color-footer-dark: #1c2733;
-  --color-footer-darker: #131b24;
+  /* Mekong parent-company marks (logo.svg is green + yellow). */
+  --color-mekong-green: #00a651;
+  --color-mekong-yellow: #fff200;
 
-  /* Neutral dark/muted section backgrounds — replace large solid-navy blocks
-     (hero, stats, CTA bands) so navy is reserved for small accent use only. */
-  --color-bg-dark: #14181f;
-  --color-bg-muted: #f5f6f7;
+  /* Ink / neutrals — warm-biased greys so they sit with the amber accent. */
+  --color-ink: #141416;
+  --color-ink-soft: #3a3d42;
+  --color-muted: #6e7278;
+  --color-line: #e4e4e4;
+  --color-surface: #f4f4f4;
+  --color-surface-2: #ebe9e5;
 
   --font-sans: var(--font-be-vietnam-pro), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-sans);
-  /* Light-weight hero/section headline treatment — same family as body,
-     dropped to a light weight for the editorial hero look. */
-  --font-serif-hero: var(--font-sans);
+  /* Condensed display face — the same family the reference site sets its
+     headlines in, loaded with the vietnamese subset. */
+  --font-display: var(--font-big-shoulders), "Arial Narrow", sans-serif;
+  --font-heading: var(--font-display);
 
-  /* Sharper, less consumer-app corners across button/card/image-frame utilities */
-  --radius-md: 2px;
+  --radius-md: 4px;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
@@ -51,15 +51,9 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 9rem; /* offset for sticky header on anchor jumps */
+  scroll-padding-top: 6rem; /* offset for the fixed header on anchor jumps */
 }
 
-/* Base element defaults belong in Tailwind's `base` layer so that utility
-   classes (e.g. `font-serif-hero` on a heading) — which live in a
-   higher-priority layer — can actually override them. Unlayered rules always
-   win over layered ones regardless of selector specificity, so leaving these
-   unlayered silently defeated every `font-serif-hero`/`font-*` override
-   applied to h1-h6 anywhere on the site. */
 @layer base {
   body {
     background: var(--background);
@@ -68,55 +62,1134 @@ html {
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Leading has to clear Vietnamese, not Latin. Uppercase in this condensed
+     face measures 1.09em to the top of a stacked mark (Ề, Ừ, Ố) and 0.13em
+     below the baseline for a dot-under (Ậ, Ộ) — 1.22em of ink in total, where
+     plain Latin caps need about 0.75em. Anything near 1.0 clips the marks and,
+     once a heading wraps, drops them onto the line above. */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    text-wrap: balance;
+    color: var(--color-ink);
   }
 }
 
-/* The reference brand sets its serif headlines in a light weight, upright
-   (never italic) — this pairs with the `font-serif-hero` utility generated
-   from the theme token above. */
-.font-serif-hero {
-  font-weight: 300;
+/* Checkered band lifted off the bottle label — used as a section divider so
+   the site and the packaging share one motif. */
+@utility checker-band {
+  background-image:
+    linear-gradient(45deg, var(--color-ink) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-ink) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--color-ink) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--color-ink) 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+  background-color: #fff;
 }
 
-/* Shared photo treatment so images sourced from different photographers read
-   as one consistent set (same warmth/saturation) across the whole site.
-   Apply with the `photo-grade` utility on any <Image>. */
-@utility photo-grade {
-  filter: saturate(0.92) sepia(0.06) contrast(1.03) brightness(1.01);
+/* ---------------------------------------------------------------------------
+   Component styles. These are deliberately plain (unlayered) CSS classes: the
+   product card and list hero carry hover choreography that would be unreadable
+   spelled out in utilities. Layout around them still uses Tailwind utilities —
+   the two never set the same property on the same element.
+   --------------------------------------------------------------------------- */
+
+/* Running text band — the reference site's signature device. */
+.kt-marquee {
+  overflow: hidden;
+  padding: 10px 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-500),
+    var(--color-brand-300)
+  );
+  border-block: 3px solid var(--color-ink);
+}
+.kt-marquee__track {
+  display: flex;
+  width: max-content;
+  gap: 40px;
+  animation: kt-marquee-left 26s linear infinite;
+}
+.kt-marquee--reverse .kt-marquee__track {
+  animation-name: kt-marquee-right;
+}
+.kt-marquee__text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink);
+}
+@keyframes kt-marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes kt-marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-/* Slim, brand-tinted scrollbar. Apply with the `scrollbar-brand` utility on
-   any scrollable element. Firefox uses the standard properties; WebKit/Blink
-   gets the inset rounded thumb that lightens the track and darkens on hover. */
-@utility scrollbar-brand {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-brand-300) transparent;
+/* Scroll invitation under the home hero. */
+.kt-scroll-cue {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.kt-scroll-cue__wheel {
+  width: 24px;
+  height: 38px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  position: relative;
+}
+.kt-scroll-cue__wheel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 3px;
+  height: 7px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #fff;
+  animation: kt-wheel 2s ease-in-out infinite;
+}
+@keyframes kt-wheel {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(12px);
+    opacity: 0.2;
+  }
+}
 
-  &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+/* Section reveal on scroll. */
+.fx-on .kt-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.kt-reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.65s var(--ease-out-quint),
+    transform 0.65s var(--ease-out-quint);
+}
+
+/* --- Product list: hero + tab bar --------------------------------------- */
+.plp-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(220px, 32vw, 380px);
+  overflow: hidden;
+  color: #fff;
+}
+.plp-hero__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.62) 100%);
+}
+.plp-hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 14px);
+  max-width: 700px;
+  padding: clamp(24px, 5vw, 48px) 20px;
+  text-align: center;
+}
+.plp-hero__title {
+  margin: 0;
+  color: #fff;
+  font-style: italic;
+  font-size: clamp(30px, 5.5vw, 58px);
+  font-weight: 800;
+  line-height: 1.14; /* clears the stacked marks — see the h1–h6 note above */
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+.plp-hero__desc {
+  margin: 0;
+  max-width: 36rem;
+  font-size: clamp(11px, 1.4vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+.plp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 14px 16px 10px;
+  background: rgba(255, 255, 255, 0.86);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(6px);
+}
+.plp-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 30px;
+  border: 0;
+  background: transparent;
+  color: #6a6a6a;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+/* Skewed parallelogram behind each tab — the reference site's tab shape. */
+.plp-tab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #d9d7d2;
+  transform: skew(-20deg);
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--ease-out-quint);
+}
+.plp-tab > span {
+  position: relative;
+  z-index: 1;
+}
+.plp-tab:hover {
+  color: #333;
+}
+.plp-tab:hover::after {
+  transform: skew(-20deg) scale(1.03);
+}
+.plp-tab[aria-selected="true"] {
+  color: var(--color-ink);
+}
+.plp-tab[aria-selected="true"]::after {
+  background: var(--color-brand-400);
+}
+.plp-tab:focus-visible {
+  outline: 3px solid var(--color-cta);
+  outline-offset: 3px;
+}
+
+/* --- Product card -------------------------------------------------------- */
+.plp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
+  gap: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 36px);
+  list-style: none;
+  /* No margin/padding reset here on purpose. Tailwind's preflight already
+     zeroes both on <ul>, and this rule sits outside Tailwind's cascade layer,
+     so a `margin: 0` here silently beats any `mt-*` utility on the element no
+     matter what the specificity is — which is how the grid ended up flush
+     against the section heading. */
+}
+.plp-grid--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 650px;
+  margin-inline: auto;
+}
+.plp-grid--cols-1 {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 300px;
+  margin-inline: auto;
+}
+.plp-grid--cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: none;
+}
+@media (max-width: 980px) {
+  .plp-grid--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  &::-webkit-scrollbar-track {
-    background: transparent;
+}
+@media (max-width: 720px) {
+  .plp-grid,
+  .plp-grid--cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  &::-webkit-scrollbar-thumb {
-    border-radius: 9999px;
-    background-color: var(--color-brand-300);
-    /* inset the thumb so it reads as a slim pill with breathing room */
-    border: 3px solid transparent;
-    background-clip: padding-box;
+}
+@media (max-width: 430px) {
+  .plp-grid,
+  .plp-grid--cols-2,
+  .plp-grid--cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 300px;
+    margin-inline: auto;
   }
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-brand-500);
+}
+
+.plp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+  /* Fill the grid row so the buttons can line up across it regardless of how
+     many lines each summary runs to. */
+  height: 100%;
+  text-align: center;
+}
+.plp-card__link {
+  flex: 1;
+}
+/* The lift is deliberately on the picture alone. Lifting the whole card takes
+   its name, spec, summary and button up with it, which knocks the hovered card
+   out of line with the rest of the row. */
+.plp-card:hover .plp-card__media {
+  transform: translateY(-6px);
+}
+/* Scroll focus. Whichever card is nearest the middle of the screen is the one
+   at full strength; the rest settle back. --fx-c comes from data-fx-parallax on
+   the card itself and peaks at 1 when the card is centred.
+
+   The floor is 0.78, not lower: these cards carry the product name and its
+   specification, and dimming real copy far enough to look dramatic is dimming
+   it far enough to be hard to read. */
+.fx-on .plp-card {
+  opacity: calc(0.78 + 0.22 * var(--fx-c, 0));
+  transition: opacity 0.45s var(--ease-out-quint);
+}
+
+/* No frame. The bottles are cut-outs with their own glow and contact shadow,
+   so a bordered, tinted panel around each one only turns the panel into the
+   object and the product into its contents. */
+.plp-card__media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  transition: transform 0.35s var(--ease-out-quint);
+}
+/* Elliptical contact shadow that spreads as the bottle lifts. */
+.plp-card__media::after {
+  content: "";
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  width: 55%;
+  height: 14%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(rgba(0, 0, 0, 0.16) 0%, transparent 72%);
+  opacity: 0.7;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s var(--ease-out-quint),
+    bottom 0.35s ease;
+}
+
+.plp-card:hover .plp-card__media::after {
+  opacity: 0.35;
+  bottom: 8%;
+  transform: translateX(-50%) scaleX(1.08);
+}
+.plp-card__tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  max-width: calc(100% - 20px);
+  padding: 5px 10px;
+  border-radius: 10px 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform 0.3s var(--ease-out-quint);
+}
+.plp-card:hover .plp-card__tag {
+  transform: translateY(1px) scale(1.03);
+}
+.plp-card__img {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  /* Sized against the tag-free stage, not the whole card, so reserving that
+     strip above does not shrink the bottle. */
+  max-width: 88%;
+  height: 92%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.18));
+  transition:
+    transform 0.4s var(--ease-out-quint),
+    filter 0.35s ease;
+}
+/* Kept deliberately small: this multiplies with the scroll swell on
+   .plp-card__lift, so 1.06 here became 1.25 combined and drove the cap under
+   the category tag. */
+.plp-card:hover .plp-card__img {
+  transform: translateY(-8px) scale(1.03);
+  filter: drop-shadow(0 20px 24px rgba(217, 149, 34, 0.42));
+}
+.plp-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  margin-top: 14px;
+  text-align: left;
+}
+.plp-card__name {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 700;
+  line-height: 1.2; /* product names are Latin today, but keep the VN headroom */
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+.plp-card:hover .plp-card__name {
+  color: var(--color-brand-600);
+}
+.plp-card__spec {
+  margin: 0;
+  color: var(--color-brand-700);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.plp-card__desc {
+  margin: 0 0 12px;
+  min-height: 2.6em;
+  color: #777;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.plp-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 128px;
+  margin-top: auto; /* sits on the card's baseline, so a row of them aligns */
+  padding: 10px 28px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition:
+    background 0.25s ease,
+    transform 0.25s var(--ease-out-quint),
+    box-shadow 0.25s ease;
+}
+/* Colour and shadow carry the hover here — a nudge upwards would put this
+   button out of line with the others in the row for the same reason. */
+.plp-card:hover .plp-card__cta {
+  background: var(--color-brand-500);
+  box-shadow: 0 10px 18px -8px rgba(217, 149, 34, 0.75);
+}
+.plp-card a:focus-visible .plp-card__cta,
+.plp-card__link:focus-visible .plp-card__cta {
+  background: var(--color-brand-600);
+  box-shadow: 0 10px 18px -8px rgba(217, 149, 34, 0.75);
+}
+.plp-card__link:focus-visible {
+  outline: 3px solid var(--color-cta);
+  outline-offset: 4px;
+  border-radius: 10px;
+}
+
+/* --- Product line-up ------------------------------------------------------
+   A purely visual beat between two sections: three bottles standing together,
+   growing as the group reaches the middle of the screen.
+
+   It only ever scales up *to* 1, never past it. Growing past full size would
+   push the outer bottles wider than the viewport; starting small and arriving
+   at full size reads as the same zoom with none of the overflow. */
+.kt-lineup {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  /* Generous, and not only for air: the scroll signal is derived from this
+     element's own box, so a taller box means the group spends longer growing
+     on the way in. The padding is most of the "longer run-up". */
+  padding-top: clamp(56px, 11vw, 170px);
+  /* More room underneath than above: the road and the reflections both run on
+     well past the bottles, and they have to finish fading inside the band or
+     the band's own clip cuts them into a straight line across the page. */
+  padding-bottom: clamp(150px, 20vw, 300px);
+}
+.kt-lineup__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Fades the road's near end and the tails of the reflections into the page.
+
+   This has to sit outside the road's own transform. Masking the road itself
+   does not work: the perspective magnifies its near end so heavily that a
+   fade set in the road's local space lands hundreds of pixels below the band,
+   and the band's clip still meets the road at full strength. Here the fade is
+   in ordinary screen space, so where it ends is where it ends. */
+.kt-lineup::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -40px;
+  left: 0;
+  z-index: 5;
+  height: clamp(170px, 21vw, 310px);
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0) 0%, #fff 76%);
+}
+.fx-on .kt-lineup__row {
+  /* Driven by --fx-d, not --fx-c. --fx-c peaks when the group is centred and
+     falls away again, so the bottles would shrink back on the way out; --fx-d
+     runs straight from +0.5 below the fold to -0.5 above it, so (0.5 - --fx-d)
+     is scroll progress and the group only ever grows.
+
+     min() caps the growth. The cap is what keeps the outer bottles inside the
+     viewport, so the clamp minimums below are set against it: at 1.3 the group
+     has to still fit the narrowest screen — at 1.8 that is what sets them.
+
+     The slope is steep on purpose. Reaching the cap only at the very end of
+     the run means hitting full size after the group has already left the top
+     of the screen, so nobody ever sees it. This gets there around two thirds
+     of the way through, while the bottles are still in view. */
+  transform: scale(min(1.8, 0.62 + 1.8 * (0.5 - var(--fx-d, 0))));
+  transform-origin: 50% 65%;
+  will-change: transform;
+  transition: transform 0.45s var(--ease-out-quint);
+}
+.kt-lineup__item {
+  position: relative;
+  display: block;
+  width: clamp(110px, 27vw, 380px);
+}
+/* Overlapped rather than evenly spaced, with the middle bottle largest and in
+   front — a line-up reads as a group, a row of equal gaps reads as a grid.
+
+   The pull is this large because each PNG carries roughly 30% transparent
+   margin on either side: the boxes have to overlap by well over half a bottle
+   before the bottles themselves look like they are standing together. A
+   percentage would not do it, since margin percentages resolve against the
+   row's width rather than the item's. */
+.kt-lineup__item:nth-child(1) {
+  z-index: 1;
+  margin-right: calc(-1 * clamp(52px, 20vw, 284px));
+  padding-bottom: 3%;
+}
+.kt-lineup__item:nth-child(2) {
+  z-index: 2;
+  width: clamp(136px, 33vw, 465px);
+}
+.kt-lineup__item:nth-child(3) {
+  z-index: 1;
+  margin-left: calc(-1 * clamp(52px, 20vw, 284px));
+  padding-bottom: 3%;
+}
+.kt-lineup__item::before {
+  content: "";
+  position: absolute;
+  inset: 6% 0 14%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 46% at 50% 50%,
+    rgba(233, 174, 60, 0.42),
+    transparent 70%
+  );
+}
+.kt-lineup__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.2));
+}
+
+/* The lit ground the bottles stand on.
+
+   Still a real 3D plane — perspective + rotateX — because the recession is
+   what gives the group somewhere to stand. What it is not any more is a road:
+   no lane markings, no asphalt, and masked softly enough on every side that it
+   never resolves into a shape. It reads as light pooling on a surface, in the
+   site's own amber rather than a grey that belongs to nothing else here. */
+.kt-lineup__ground {
+  position: absolute;
+  left: 50%;
+  /* The rotation axis is this element's top edge, and that axis is the horizon
+     — so it has to sit exactly at the bottles' feet. */
+  top: 84%;
+  z-index: 0;
+  width: min(1180px, 88vw);
+  height: clamp(190px, 23vw, 320px);
+  pointer-events: none;
+  transform-origin: 50% 0%;
+  /* A long perspective: the shorter it is, the more violently the near edge is
+     magnified. The tilt eases with the scroll so the horizon lifts and settles
+     as the reader moves instead of sitting there like a photograph. */
+  transform: translateX(-50%) perspective(1100px)
+    rotateX(calc(50deg + var(--fx-d, 0) * 2.5deg));
+  background: linear-gradient(
+    to bottom,
+    rgba(233, 174, 60, 0.5) 0%,
+    rgba(217, 149, 34, 0.26) 42%,
+    rgba(189, 125, 19, 0.08) 74%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    58% 72% at 50% 46%,
+    #000 6%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(58% 72% at 50% 46%, #000 6%, transparent 72%);
+}
+
+/* Sits at the base of the bottle, not the base of its box: the PNGs carry
+   about 15% transparent margin underneath. */
+.kt-lineup__contact {
+  position: absolute;
+  left: 50%;
+  top: 83%;
+  z-index: -1;
+  width: 44%;
+  height: 5.5%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(rgba(48, 32, 6, 0.42), transparent 72%);
+  pointer-events: none;
+}
+
+.kt-lineup__reflection {
+  position: absolute;
+  top: 70%; /* the flipped copy's ink starts where the bottle's ink ends */
+  left: 0;
+  z-index: -2;
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  opacity: 0.26;
+  transform: scaleY(-1);
+  /* The mask is applied in the element's own space and the flip then turns it
+     upside down, so the gradient has to run the opposite way to how it reads:
+     opaque at the element's bottom is what ends up nearest the bottle. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 64%,
+    rgba(0, 0, 0, 0.9) 92%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 64%,
+    rgba(0, 0, 0, 0.9) 92%
+  );
+}
+
+/* --- Dark slab ------------------------------------------------------------
+   The one high-contrast block on the page. It is inset and rounded rather than
+   full-bleed on purpose: a band that runs edge to edge cuts the page in two,
+   whereas a slab lets the page's own ground run past on both sides, so the
+   contrast still reads but the seam never forms. */
+.kt-slab {
+  border-radius: clamp(20px, 2.4vw, 36px);
+  background: var(--color-ink);
+  color: rgb(255 255 255 / 0.75);
+  overflow: hidden;
+}
+
+/* --- Section breathing ----------------------------------------------------
+   Every block eases to full size as it reaches the middle of the screen and
+   settles back as it leaves, so nothing on the page is ever completely still.
+   That continuity — not the size of any one effect — is what makes a scroll
+   feel like one piece rather than a stack of separate panels.
+
+   It only ever scales *down*, never past 1. Growing a full-width block by a
+   few percent pushes it wider than the viewport and raises a horizontal
+   scrollbar; shrinking cannot.
+
+   The amount is deliberately small. Measured on the reference site the same
+   move is 3-4%, which is well under what most people would guess. */
+.fx-on .kt-breathe {
+  transform: scale(calc(1.0 - var(--fx-breathe, 0.035) * (1.0 - var(--fx-c, 0))));
+  transform-origin: 50% 45%;
+  will-change: transform;
+  /* Same damping idea as the bottles: trails the scroll slightly instead of
+     snapping to each notch of the wheel. */
+  transition: transform 0.4s var(--ease-out-quint);
+}
+
+/* --- Liquid band ----------------------------------------------------------
+   A decorative "oil" backdrop for a section. No library and no new JavaScript:
+   the section subscribes to the existing scroll engine with data-fx-parallax
+   and reads --fx-d from it, exactly like the bottles do.
+
+   Every layer is split in two — the outer element carries the scroll-driven
+   transform, its ::before carries the idle drift. One element cannot do both,
+   because the second transform would simply replace the first. Only transform
+   and opacity animate, so this stays on the GPU and never reflows the page. */
+.kt-liquid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff 0%, #fdf8ee 55%, #fff 100%);
+}
+.kt-liquid__content {
+  position: relative;
+  z-index: 1;
+}
+/* The WebGL droplets sit above the painted layers and below the copy. If the
+   canvas never initialises it is simply an empty transparent box. */
+.kt-liquid__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Only the last stretch, so the slicks still reach the bottles but no longer
+     meet the clip edge at full strength. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 86%, transparent 100%);
+}
+/* Three soft pools of oil, drifting and tipping with the scroll. They span the
+   whole band, so they carry on down behind the bottle line-up at its foot. */
+.kt-liquid__pool {
+  position: absolute;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, calc(var(--fx-d, 0) * var(--kt-drift, 80px)), 0)
+    rotate(calc(var(--fx-d, 0) * 5deg));
+  /* Fades to nothing before the band ends. The band clips its overflow, and
+     without this the pool was still at full strength when it hit that edge —
+     so the clip sliced it into a ruler-straight line across the page. The box
+     is 150% of the band and starts 25% above it, which puts the band's own
+     bottom at about 83% of the way down this element. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 86%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 86%);
+}
+.kt-liquid__pool::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      21% 24% at 20% 26%,
+      rgba(233, 174, 60, 0.36),
+      transparent 66%
+    ),
+    radial-gradient(
+      18% 21% at 80% 58%,
+      rgba(217, 149, 34, 0.30),
+      transparent 68%
+    ),
+    radial-gradient(
+      24% 18% at 52% 90%,
+      rgba(189, 125, 19, 0.20),
+      transparent 70%
+    ),
+    radial-gradient(
+      15% 18% at 63% 20%,
+      rgba(233, 174, 60, 0.22),
+      transparent 68%
+    ),
+    radial-gradient(
+      17% 16% at 34% 70%,
+      rgba(217, 149, 34, 0.20),
+      transparent 70%
+    );
+  /* No blur filter here on purpose. A blur over an area this size costs ~85ms
+     a frame (12fps) because it has to be re-rendered every time the parent
+     transform changes. The gradient stops already fade to nothing, so the
+     softness was free all along. */
+  animation: kt-liquid-breathe 24s ease-in-out infinite;
+}
+@keyframes kt-liquid-breathe {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.09);
+  }
+}
+
+/* --- Oil picker results ---------------------------------------------------
+   These rows are links, but they read as information panels, so the hover has
+   a second job beyond looking alive: make it obvious they can be clicked.
+   The motion is the product card's vocabulary — lift, tilt, gold glow, gloss
+   sweep — deliberately scaled down, since a 96px thumbnail cannot carry the
+   same amplitude as a 200px hero bottle. */
+.kt-pick {
+  transition:
+    transform 0.3s var(--ease-out-quint),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.kt-pick:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -18px rgba(0, 0, 0, 0.35);
+}
+.kt-pick__media {
+  position: relative;
+  flex-shrink: 0;
+  width: 6rem;
+  height: 6rem;
+}
+.kt-pick__glow {
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 50% at 50% 52%,
+    rgba(233, 174, 60, 0.5),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.kt-pick:hover .kt-pick__glow {
+  opacity: 1;
+}
+/* Both images ride this box, so the sweep stays registered on the bottle while
+   the bottle itself is lifting and tilting. */
+.kt-pick__lift {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s var(--ease-out-quint);
+}
+.kt-pick:hover .kt-pick__lift {
+  transform: translateY(-6px) rotate(-3deg) scale(1.08);
+}
+.kt-pick__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.18));
+  transition: filter 0.35s ease;
+}
+.kt-pick:hover .kt-pick__img {
+  filter: drop-shadow(0 12px 14px rgba(217, 149, 34, 0.45));
+}
+.kt-pick__name {
+  transition: color 0.25s ease;
+}
+.kt-pick:hover .kt-pick__name {
+  color: var(--color-brand-600);
+}
+
+/* --- Product detail ------------------------------------------------------ */
+
+/* --- Scroll choreography -------------------------------------------------
+   Driven by ScrollFX, which publishes the unitless signals --fx-d / --fx-c /
+   --fx-g (per card) and --fx-hp (per hero) as the page scrolls. The amplitudes
+   below are the tunable half: override --fx-drift / --fx-swell / --fx-glow on
+   any ancestor to dial a section up or down. Every rule here degrades to a
+   plain static layout when the signals are absent — i.e. under reduced motion,
+   or before hydration. */
+
+/* Entrance: cards drift up out of a soft blur, staggered by --fx-i. */
+.fx-on .fx-rise {
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  filter: blur(10px);
+}
+.fx-rise.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  transition:
+    opacity 0.75s var(--ease-out-quint),
+    transform 0.75s var(--ease-out-quint),
+    filter 0.7s ease;
+  transition-delay: calc(var(--fx-i, 0) * 90ms);
+}
+
+/* Headings that arrive a word at a time. Lighter than .fx-rise on purpose —
+   a whole heading's worth of blurred, sliding words reads as noise, and the
+   stagger has to be quick or the last word lands long after the eye got there.
+   Nothing is hidden unless .fx-on says the engine is present to reveal it. */
+.fx-on .fx-words > span {
+  opacity: 0;
+  transform: translateY(0.45em);
+}
+.fx-words > span {
+  display: inline-block;
+}
+.fx-words.is-in > span {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.55s var(--ease-out-quint),
+    transform 0.55s var(--ease-out-quint);
+  transition-delay: calc(var(--fx-i, 0) * 55ms);
+}
+
+/* Bottle stage: glow behind, endless bob, scroll-linked drift and swell. */
+.plp-card__glow,
+.pdp-stage__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    46% 38% at 50% 46%,
+    rgba(233, 174, 60, 0.55),
+    transparent 70%
+  );
+  opacity: calc(var(--fx-g, 0) * var(--fx-glow, 0.7));
+  transition: opacity 0.45s ease;
+}
+.plp-card__float,
+.pdp-stage__float {
+  position: absolute;
+  inset: 0;
+  /* The bottle is centred in here, so this box — not the card — decides how
+     close the cap can get to the category tag. */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: kt-float 6.5s ease-in-out infinite;
+  animation-delay: calc(var(--fx-i, 0) * -1.1s);
+}
+/* Reserve the tag's strip (it ends 35px down) plus a gap, so the bottle still
+   clears it at full swell + hover + the top of the bob. */
+.plp-card__float {
+  inset: 44px 8px 8px;
+}
+.plp-card__lift,
+.pdp-stage__lift {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  /* Tilt reads as weight: the bottle leans back on the way down and forward on
+     the way up, because --fx-d is signed by scroll direction. */
+  transform: translate3d(0, calc(var(--fx-d, 0) * var(--fx-drift, 32px)), 0)
+    rotate(calc(var(--fx-d, 0) * var(--fx-tilt, 8deg)))
+    scale(calc(1 + var(--fx-swell, 0.11) * var(--fx-c, 0)));
+  will-change: transform;
+  /* Damping: the scroll values update every frame, so easing them here makes
+     the bottle trail the scroll slightly instead of snapping to it — and it
+     removes the jump when the engine takes over on first paint. */
+  transition: transform 0.45s var(--ease-out-quint);
+}
+@keyframes kt-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    /* Trimmed from 7px when the tilt landed — two idle motions at full
+       amplitude on one object reads as jitter rather than float. */
+    transform: translateY(-5px);
+  }
+}
+
+/* Gloss sweep: a second copy of the bottle, flattened to a white silhouette,
+   with only a diagonal band of it unmasked. The band's position is driven by
+   scroll, so the highlight travels across the bottle as it passes.
+   It reuses the exact same image URL as .plp-card__img, so the browser serves
+   it from cache — the effect costs no extra bytes. */
+.plp-card__shine,
+.pdp-stage__shine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 2;
+  pointer-events: none;
+  filter: brightness(0) invert(1);
+  /* Adds light instead of painting white over the bottle, so the colour
+     underneath survives and the band reads as a reflection. */
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(
+    100deg,
+    transparent 46%,
+    #000 50%,
+    transparent 54%
+  );
+  mask-image: linear-gradient(
+    100deg,
+    transparent 46%,
+    #000 50%,
+    transparent 54%
+  );
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: calc((0.5 - var(--fx-d, 0)) * 100%) 0;
+  mask-position: calc((0.5 - var(--fx-d, 0)) * 100%) 0;
+  /* Only lit near the middle of the screen, so no permanent white band. */
+  opacity: calc(var(--fx-c, 0) * var(--fx-shine, 0.5));
+}
+/* Same box as .plp-card__img: same intrinsic image, same constraints, centred
+   the same way — so the silhouette lands exactly on the bottle. */
+.plp-card__shine {
+  width: auto;
+  max-width: 88%;
+  height: 92%;
+  object-fit: contain;
+}
+
+/* Hero photo drifts slower than the page it sits behind. The drift has to stay
+   under the slack that scale(1.14) buys us, or the photo's edge shows. */
+[data-fx-hero] img {
+  transform: translate3d(0, calc(var(--fx-hp, 0) * var(--fx-hero-drift, 90px)), 0)
+    scale(1.14);
+  will-change: transform;
+}
+
+/* Detail-page bottle: same choreography, more room to move. Its stage clips
+   (overflow-hidden), so the swell stays at the default. */
+.pdp-stage {
+  position: relative;
+  --fx-drift: 45px;
+}
+
+/* Single-row grids: every bottle peaks at the same instant, so there is no
+   neighbour at rest to compare against and the default amplitude reads as
+   nothing happening. Turn it up where that's the case. */
+.fx-strong {
+  --fx-swell: 0.18;
+  --fx-drift: 48px;
+  --fx-glow: 0.9;
+}
+
+/* Tab panels toggle with the hidden attribute — make sure no layout utility
+   on the panel can defeat it. */
+[hidden] {
+  display: none !important;
+}
+
+.pdp-hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(200px, 28vw, 300px);
+  overflow: hidden;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .kt-marquee__track,
+  .kt-scroll-cue__wheel::after {
+    animation: none;
+  }
+  .fx-on .kt-reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .fx-on .plp-card {
+    opacity: 1;
+  }
+  .plp-card,
+  .plp-card:hover .plp-card__media,
+  .plp-card:hover .plp-card__img,
+  .plp-card:hover .plp-card__tag {
+    transform: none;
+  }
+  .fx-on .fx-rise,
+  .fx-on .fx-words > span {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .plp-card__float,
+  .pdp-stage__float {
+    animation: none;
+  }
+  .kt-pick:hover,
+  .kt-pick:hover .kt-pick__lift {
+    transform: none;
+  }
+  .kt-pick__glow {
+    opacity: 0;
+  }
+  .fx-on .kt-breathe,
+  .fx-on .kt-lineup__row {
+    transform: none;
+  }
+  /* Keeps its recession — that is depth, not motion — but stops tilting. */
+  .kt-lineup__ground {
+    transform: translateX(-50%) perspective(1100px) rotateX(50deg);
+  }
+  /* The oil band keeps its colour — that is not motion — but stops moving. */
+  .kt-liquid__pool {
+    transform: none;
+  }
+  .kt-liquid__pool::before {
+    animation: none;
+  }
+  .plp-card__lift,
+  .pdp-stage__lift,
+  [data-fx-hero] img {
+    transform: none;
+  }
+  .plp-card__glow,
+  .pdp-stage__glow,
+  .plp-card__shine,
+  .pdp-stage__shine {
+    opacity: 0;
   }
 }

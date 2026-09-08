@@ -1,0 +1,68 @@
+{
+  "title": "Về Katsuma",
+  "metaDescription": "Katsuma phân phối nhớt xe máy do Công ty Cổ phần Hóa Dầu Mekong sản xuất, qua hệ thống đại lý và tiệm sửa xe, với 26 năm kinh nghiệm pha chế dầu nhớt.",
+  "hero": {
+    "heading": "Nhớt Việt cho xe Việt",
+    "subheading": "Katsuma là đơn vị phát triển thị trường nhớt xe máy của Công ty Cổ phần Hóa Dầu Mekong — đưa sản phẩm từ nhà máy tới từng tiệm sửa xe trên cả nước."
+  },
+  "story": {
+    "heading": "Chúng tôi làm gì",
+    "paragraphs": [
+      "Katsuma không phải một thương hiệu thuê gia công. Mọi chai nhớt Katsuma phân phối đều được pha chế tại nhà máy của Công ty Cổ phần Hóa Dầu Mekong ở Tây Ninh — nơi đã sản xuất dầu nhớt liên tục 26 năm cho cả thị trường công nghiệp lẫn dân dụng.",
+      "Việc của Katsuma là phần còn lại của chặng đường: đưa sản phẩm ra thị trường xe máy qua hệ thống đại lý và tiệm sửa xe, hỗ trợ trưng bày, và giúp người đi xe chọn đúng loại nhớt cho chiếc xe của mình."
+    ],
+    "image": "/images/site/nha-may.jpg",
+    "imageAlt": "Hình ảnh giới thiệu năng lực của Công ty Cổ phần Hóa Dầu Mekong"
+  },
+  "stats": [
+    {
+      "value": "26",
+      "unit": "năm",
+      "label": "Kinh nghiệm sản xuất dầu nhớt"
+    },
+    {
+      "value": "38.084",
+      "unit": "m²",
+      "label": "Diện tích nhà máy tại Tây Ninh"
+    },
+    {
+      "value": "34.000",
+      "unit": "tấn/năm",
+      "label": "Công suất pha chế"
+    }
+  ],
+  "model": {
+    "heading": "Cách hàng đến tay người dùng",
+    "steps": [
+      {
+        "title": "Nhà máy Hóa Dầu Mekong",
+        "body": "Pha chế và đóng chai theo tiêu chuẩn JASO, API — kiểm soát chất lượng ngay tại nguồn."
+      },
+      {
+        "title": "Katsuma phân phối",
+        "body": "Đưa hàng tới đại lý và tiệm sửa xe, hỗ trợ bảng hiệu, kệ trưng bày và chương trình bán hàng."
+      },
+      {
+        "title": "Tiệm sửa xe và người đi xe",
+        "body": "Thợ tư vấn đúng loại nhớt cho từng dòng xe; khách thay nhớt ngay tại tiệm quen gần nhà."
+      }
+    ]
+  },
+  "commitments": {
+    "heading": "Ba cam kết",
+    "items": [
+      {
+        "title": "Hàng chính hãng từ nhà máy",
+        "body": "Không qua trung gian không rõ nguồn gốc. Mỗi lô hàng đều truy được về nhà máy sản xuất."
+      },
+      {
+        "title": "Đúng chuẩn kỹ thuật công bố",
+        "body": "Thông số JASO, API, SAE in trên chai là thông số thật, có tài liệu kỹ thuật kèm theo cho đại lý và thợ."
+      },
+      {
+        "title": "Đồng hành với đại lý",
+        "body": "Chính sách giá rõ ràng theo bậc, giao hàng tận tiệm và hỗ trợ khuyến mãi theo mùa."
+      }
+    ]
+  }
+}
