@@ -23,6 +23,20 @@ const NAV_RIGHT = [
 const NAV_ALL = [...NAV_LEFT, ...NAV_RIGHT];
 
 /**
+ * Whether a path is served by the external content app rather than by us.
+ *
+ * Such a link must not be prefetched. Prefetch asks the route for a React
+ * payload; middleware hands back the content app's finished HTML instead, and
+ * the browser then resolves that page's own script tags against this origin —
+ * nineteen 404s per page view, plus the blog's stylesheet and web fonts fetched
+ * and never used, on every page whether or not anyone visits the blog.
+ * Navigation is unaffected: it was always a full page load.
+ */
+function isProxied(href: string) {
+  return href === "/blog" || href.startsWith("/blog/");
+}
+
+/**
  * Whether a nav item is the one you are currently looking at.
  *
  * Anchor links point at a section of the home page rather than a route, so they
@@ -93,6 +107,7 @@ function NavLink({
   return (
     <Link
       href={item.href}
+      prefetch={isProxied(item.href) ? false : undefined}
       aria-current={current ? "page" : undefined}
       className={`relative font-display text-[20px] font-bold tracking-[0.02em] uppercase transition-opacity ${
         current ? "text-ink" : "text-ink/65 hover:text-ink"
@@ -227,6 +242,7 @@ function NavMenu({
             <Link
               key={topic.href}
               href={topic.href}
+              prefetch={false}
               className="block rounded-sm px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-brand-100"
             >
               {topic.label}
@@ -346,6 +362,7 @@ export function SiteHeader() {
               <div key={item.href} className="border-b border-line last:border-b-0">
                 <Link
                   href={item.href}
+                  prefetch={isProxied(item.href) ? false : undefined}
                   aria-current={current ? "page" : undefined}
                   className={`block py-3 font-display text-[22px] font-bold uppercase ${
                     current
@@ -363,6 +380,7 @@ export function SiteHeader() {
                       <Link
                         key={topic.href}
                         href={topic.href}
+                        prefetch={false}
                         className="block py-1.5 text-sm font-medium text-ink/70"
                       >
                         {topic.label}

@@ -72,7 +72,11 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-2 text-sm">
             {BLOG_TOPICS.map((topic) => (
               <li key={topic.href}>
-                <Link href={topic.href} className="hover:text-brand-300">
+                <Link
+                  href={topic.href}
+                  prefetch={false}
+                  className="hover:text-brand-300"
+                >
                   {topic.label}
                 </Link>
               </li>
