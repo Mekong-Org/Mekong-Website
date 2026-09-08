@@ -47,14 +47,13 @@ function Header() {
   // needs a secret key and sends no CORS headers, so the browser cannot read it
   // from here, and topics change far too rarely to be worth a proxy.
   //
-  // `label` is what the menu shows; `href` must be the topic's real slug. The
-  // one topic that exists is named as a whole question — fine as a page title,
-  // far too long for a menu — hence the short label.
+  // `label` is what the menu shows; `href` must be the topic's real slug. Every
+  // topic is titled as a whole question — fine as a page title, far too long
+  // for a menu — hence the short labels, kept distinct in their first word or
+  // two so the list can be scanned down its left edge.
   //
-  // Add a row per topic as the content team creates them. Aim for four, named
-  // after the product lines (Nhớt xe số / Nhớt xe tay ga / Dầu hộp số xe tay ga
-  // / Chọn nhớt & bảo dưỡng) so a reader lands on the matching product. Below
-  // three rows the menu is not worth opening: drop `topics: true` above and
+  // One row per product line is the aim, so a reader lands on the matching oil.
+  // Below three the menu is not worth opening: drop `topics: true` above and
   // "Bài viết" goes back to being a plain link.
   const BLOG_TOPICS = [
     {
@@ -62,6 +61,17 @@ function Header() {
       href:
         SITE +
         "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
+    },
+    {
+      label: "Xe tay ga bị nóng máy",
+      href:
+        SITE + "/blog/topic/xe-tay-ga-bi-nong-may-khi-chay-duong-dai-phai-lam-sao",
+    },
+    {
+      label: "Nhớt nội hay nhập cho xe ga",
+      href:
+        SITE +
+        "/blog/topic/so-sanh-dau-nhot-san-xuat-trong-nuoc-va-nhap-khau-cho-xe-tay-ga",
     },
     { label: "Tất cả bài viết", href: SITE + "/blog/topic" },
   ];

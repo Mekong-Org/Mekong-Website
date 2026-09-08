@@ -37,6 +37,17 @@ function Footer() {
         SITE +
         "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
     },
+    {
+      label: "Xe tay ga bị nóng máy",
+      href:
+        SITE + "/blog/topic/xe-tay-ga-bi-nong-may-khi-chay-duong-dai-phai-lam-sao",
+    },
+    {
+      label: "Nhớt nội hay nhập cho xe ga",
+      href:
+        SITE +
+        "/blog/topic/so-sanh-dau-nhot-san-xuat-trong-nuoc-va-nhap-khau-cho-xe-tay-ga",
+    },
     { label: "Tất cả bài viết", href: SITE + "/blog/topic" },
   ];
 
