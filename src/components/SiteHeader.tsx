@@ -18,6 +18,22 @@ const NAV_RIGHT = [
 
 const NAV_ALL = [...NAV_LEFT, ...NAV_RIGHT];
 
+/**
+ * Whether a nav item points at the page being shown.
+ *
+ * Anchor links never match. "Chọn nhớt" points at a section of the home page
+ * rather than a route of its own, so treating it as a route would light it up
+ * alongside "Trang chủ" every time someone is on /.
+ *
+ * Everything else matches its own path and anything beneath it, so a product
+ * detail page still marks "Sản phẩm" as the section you are in.
+ */
+function isCurrentPage(href: string, pathname: string) {
+  if (href.includes("#")) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 /** Wordmark panel: parent-company logo (temporary) beside the Katsuma name. */
 function LogoPanel() {
   return (
@@ -48,6 +64,38 @@ function LogoPanel() {
   );
 }
 
+/**
+ * Marked with aria-current so the page is announced, not only drawn. The rule
+ * underneath is a sibling element rather than a text-decoration: it needs to
+ * sit clear of the descenders and the stacked Vietnamese marks above it.
+ */
+function NavLink({
+  item,
+  pathname,
+}: {
+  item: { label: string; href: string };
+  pathname: string;
+}) {
+  const current = isCurrentPage(item.href, pathname);
+  return (
+    <Link
+      href={item.href}
+      aria-current={current ? "page" : undefined}
+      className={`relative font-display text-[20px] font-bold tracking-[0.02em] uppercase transition-opacity ${
+        current ? "text-ink" : "text-ink/65 hover:text-ink"
+      }`}
+    >
+      {item.label}
+      {current && (
+        <span
+          className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-ink"
+          aria-hidden="true"
+        />
+      )}
+    </Link>
+  );
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -65,25 +113,13 @@ export function SiteHeader() {
           aria-label="Điều hướng chính"
         >
           {NAV_LEFT.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="font-display text-[20px] font-bold tracking-[0.02em] text-ink uppercase transition-opacity hover:opacity-70"
-            >
-              {item.label}
-            </Link>
+            <NavLink key={item.href} item={item} pathname={pathname} />
           ))}
         </nav>
         <LogoPanel />
         <nav className="flex items-center justify-evenly" aria-label="Liên kết phụ">
           {NAV_RIGHT.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="font-display text-[20px] font-bold tracking-[0.02em] text-ink uppercase transition-opacity hover:opacity-70"
-            >
-              {item.label}
-            </Link>
+            <NavLink key={item.href} item={item} pathname={pathname} />
           ))}
         </nav>
       </div>
@@ -110,15 +146,23 @@ export function SiteHeader() {
           className="border-t border-ink/10 bg-white px-4 py-2 lg:hidden"
           aria-label="Điều hướng chính"
         >
-          {NAV_ALL.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="block border-b border-line py-3 font-display text-[22px] font-bold uppercase last:border-b-0"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV_ALL.map((item) => {
+            const current = isCurrentPage(item.href, pathname);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                className={`block border-b border-line py-3 font-display text-[22px] font-bold uppercase last:border-b-0 ${
+                  current
+                    ? "border-l-4 border-l-cta pl-3 text-brand-700"
+                    : "text-ink"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       )}
     </header>
