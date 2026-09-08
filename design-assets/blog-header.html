@@ -1,0 +1,181 @@
+<!--
+  Katsuma site header, for the external content app that serves /blog.
+
+  Every rule is inline. The blog is rendered by a different application that has
+  no access to this project's stylesheet, so a class-based copy of the header
+  would arrive unstyled — which is what the current one does.
+
+  Three things to keep in step with the real header in
+  src/components/SiteHeader.tsx:
+    - the six nav entries, "Bài viết" included
+    - SITE_ORIGIN below, once the client's own domain replaces the vercel.app one
+    - the wordmark's absolute image URL, for the same reason
+
+  The active item is marked by the aria-current attribute and the underline on
+  "Bài viết". The blog is the only page this header is served on, so that is
+  fixed rather than computed.
+-->
+<header
+  style="
+    position: relative;
+    border-top: 8px solid #fff;
+    border-bottom: 8px solid #fff;
+    background: linear-gradient(to bottom, #d99522, #eec263);
+    font-family: 'Big Shoulders', 'Arial Narrow', sans-serif;
+  "
+>
+  <div
+    style="
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: stretch;
+      width: 100%;
+      max-width: 1440px;
+      height: 70px;
+      margin: 0 auto;
+      padding: 0 24px;
+      box-sizing: border-box;
+    "
+  >
+    <nav
+      aria-label="Điều hướng chính"
+      style="display: flex; align-items: center; justify-content: space-evenly"
+    >
+      <a
+        href="https://mekong-website-vert.vercel.app/"
+        style="
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: rgba(20, 20, 22, 0.65);
+        "
+        >Trang chủ</a
+      >
+      <a
+        href="https://mekong-website-vert.vercel.app/san-pham"
+        style="
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: rgba(20, 20, 22, 0.65);
+        "
+        >Sản phẩm</a
+      >
+      <a
+        href="https://mekong-website-vert.vercel.app/#chon-nhot"
+        style="
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: rgba(20, 20, 22, 0.65);
+        "
+        >Chọn nhớt</a
+      >
+    </nav>
+
+    <a
+      href="https://mekong-website-vert.vercel.app/"
+      aria-label="Katsuma - về trang chủ"
+      style="
+        display: flex;
+        align-items: stretch;
+        flex-shrink: 0;
+        text-decoration: none;
+      "
+    >
+      <span style="width: 10px; flex-shrink: 0; background: #f4d99b"></span>
+      <span style="width: 10px; flex-shrink: 0; background: #faedcf"></span>
+      <span
+        style="
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 0 28px;
+          background: #fff;
+        "
+      >
+        <img
+          src="https://mekong-website-vert.vercel.app/images/brand/mekong-logo.svg"
+          alt="Hóa Dầu Mekong"
+          style="height: 26px; width: auto; display: block"
+        />
+        <span style="width: 1px; height: 28px; background: #e4e4e4"></span>
+        <span
+          style="
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #141416;
+          "
+          >Katsuma</span
+        >
+      </span>
+      <span style="width: 10px; flex-shrink: 0; background: #faedcf"></span>
+      <span style="width: 10px; flex-shrink: 0; background: #f4d99b"></span>
+    </a>
+
+    <nav
+      aria-label="Liên kết phụ"
+      style="display: flex; align-items: center; justify-content: space-evenly"
+    >
+      <a
+        href="https://mekong-website-vert.vercel.app/blog"
+        aria-current="page"
+        style="
+          position: relative;
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: #141416;
+        "
+        >Bài viết
+        <span
+          aria-hidden="true"
+          style="
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 3px;
+            border-radius: 999px;
+            background: #141416;
+          "
+        ></span>
+      </a>
+      <a
+        href="https://mekong-website-vert.vercel.app/ve-katsuma"
+        style="
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: rgba(20, 20, 22, 0.65);
+        "
+        >Về Katsuma</a
+      >
+      <a
+        href="https://mekong-website-vert.vercel.app/lam-dai-ly"
+        style="
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          text-decoration: none;
+          color: rgba(20, 20, 22, 0.65);
+        "
+        >Làm đại lý</a
+      >
+    </nav>
+  </div>
+</header>
