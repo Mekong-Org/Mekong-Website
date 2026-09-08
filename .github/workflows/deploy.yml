@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -11,16 +11,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# Deployment is not done here. The Vercel project is connected straight to this
-# repository, so Vercel builds and deploys every push itself — production from
-# main, a preview from every pull request. Driving it from here as well would
-# mean a second build, a Vercel token stored as a repository secret, and a run
-# that reports red whenever those credentials drift, all for a deploy that has
-# already happened.
+# Deployment goes through the Vercel CLI rather than Vercel's Git integration.
+# That integration cannot read a private repository inside a GitHub org without
+# a Vercel Pro plan; here the runner checks the code out itself and hands Vercel
+# a finished build, so the plan never comes into it.
 #
-# What is left is the check Vercel cannot give us early enough to be useful: a
-# build that runs before the deploy does, so a broken push fails here rather
-# than halfway through going live.
+# One secret, VERCEL_TOKEN. `vercel deploy --yes` creates and links the project
+# on its first run and reuses it afterwards, so there is no org id or project id
+# to copy out of a dashboard and keep in step. Anything the app reads from the
+# environment belongs in the Vercel project's own settings — one place, not two.
 
 jobs:
   build:
@@ -48,6 +47,37 @@ jobs:
         run: pnpm check:content
 
       - name: Build
-        # No environment variables needed: every one the app reads has a
-        # fallback, and the real values live in the Vercel project.
+        # Runs without any environment variables: every one the app reads has a
+        # fallback. This is the check that still works when the Vercel
+        # credentials are missing or stale, which is when it matters most.
         run: pnpm build
+
+  deploy-preview:
+    name: Deploy Preview
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel (preview)
+        run: |
+          npx --yes vercel@latest deploy \
+            --yes --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  deploy-production:
+    name: Deploy Production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel (production)
+        run: |
+          npx --yes vercel@latest deploy \
+            --prod --yes --token="$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
