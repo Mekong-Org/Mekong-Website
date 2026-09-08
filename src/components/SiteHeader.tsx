@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NAV_LEFT = [
   { label: "Trang chủ", href: "/" },
@@ -20,6 +20,27 @@ const NAV_RIGHT = [
 ];
 
 const NAV_ALL = [...NAV_LEFT, ...NAV_RIGHT];
+
+/**
+ * Topics listed under "Bài viết". Also proxied, hence the /blog prefix.
+ *
+ * Written out rather than fetched: api/blog/topics needs AEO_SECRET_KEY, which
+ * would make the header a server component or a loading state, and topics
+ * change a few times a year. Keep this in step with design-assets/blog-header
+ * .jsx, which carries the same list for the content app's own copy of the bar.
+ *
+ * The first topic is named as a whole question in the content app — a fine page
+ * title, far too long for a menu — so the label here is the short form. Four
+ * entries is the target, one per product line; below three the menu is not
+ * worth opening and "Bài viết" should go back to being a plain link.
+ */
+const BLOG_TOPICS = [
+  {
+    label: "Nhớt xe số & chuẩn JASO",
+    href: "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
+  },
+  { label: "Tất cả bài viết", href: "/blog/topic" },
+];
 
 /**
  * Whether a nav item is the one you are currently looking at.
@@ -108,6 +129,105 @@ function NavLink({
   );
 }
 
+/**
+ * "Bài viết" plus a caret that opens its topics.
+ *
+ * The label stays an ordinary link and the caret is its own button, so a tap
+ * never has to mean both "open" and "go". Hover-to-open is gated on the device
+ * actually having a hovering pointer: a touch browser synthesises mouseenter
+ * just before the click of a tap, which would open the menu and let the tap
+ * toggle it straight back shut, leaving the caret looking dead. Where hover
+ * does work the caret only opens — a toggle would close what the pointer is
+ * still hovering — and Escape or a click outside is what closes it.
+ */
+function NavMenu({
+  item,
+  pathname,
+  activeSection,
+}: {
+  item: { label: string; href: string };
+  pathname: string;
+  activeSection: string | null;
+}) {
+  const [open, setOpen] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const query = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setCanHover(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: MouseEvent) => {
+      if (!ref.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative flex items-center gap-1.5"
+      onMouseEnter={canHover ? () => setOpen(true) : undefined}
+      onMouseLeave={canHover ? () => setOpen(false) : undefined}
+    >
+      <NavLink item={item} pathname={pathname} activeSection={activeSection} />
+      <button
+        type="button"
+        onClick={() => setOpen((value) => (canHover ? true : !value))}
+        aria-expanded={open}
+        aria-label="Mở danh mục bài viết"
+        className="flex items-center text-ink"
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        >
+          <path
+            d="M2.5 4.5 6 8l3.5-3.5"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      <div
+        hidden={!open}
+        className="absolute top-[calc(100%+14px)] right-0 z-30 min-w-[240px] rounded-lg bg-white p-2 shadow-[0_12px_32px_rgba(20,20,22,0.22)]"
+      >
+        {BLOG_TOPICS.map((topic) => (
+          <Link
+            key={topic.href}
+            href={topic.href}
+            className="block rounded-sm px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-brand-100"
+          >
+            {topic.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -168,14 +288,23 @@ export function SiteHeader() {
           className="flex items-center justify-evenly"
           aria-label="Liên kết phụ"
         >
-          {NAV_RIGHT.map((item) => (
-            <NavLink
-              key={item.href}
-              item={item}
-              pathname={pathname}
-              activeSection={activeSection}
-            />
-          ))}
+          {NAV_RIGHT.map((item) =>
+            item.href === "/blog" ? (
+              <NavMenu
+                key={item.href}
+                item={item}
+                pathname={pathname}
+                activeSection={activeSection}
+              />
+            ) : (
+              <NavLink
+                key={item.href}
+                item={item}
+                pathname={pathname}
+                activeSection={activeSection}
+              />
+            ),
+          )}
         </nav>
       </div>
 
@@ -204,18 +333,34 @@ export function SiteHeader() {
           {NAV_ALL.map((item) => {
             const current = isCurrentPage(item.href, pathname, activeSection);
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={current ? "page" : undefined}
-                className={`block border-b border-line py-3 font-display text-[22px] font-bold uppercase last:border-b-0 ${
-                  current
-                    ? "border-l-4 border-l-cta pl-3 text-brand-700"
-                    : "text-ink"
-                }`}
-              >
-                {item.label}
-              </Link>
+              <div key={item.href} className="border-b border-line last:border-b-0">
+                <Link
+                  href={item.href}
+                  aria-current={current ? "page" : undefined}
+                  className={`block py-3 font-display text-[22px] font-bold uppercase ${
+                    current
+                      ? "border-l-4 border-l-cta pl-3 text-brand-700"
+                      : "text-ink"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+                {/* The drawer has room to list the topics outright; a second
+                    thing to tap to reach them would only be in the way. */}
+                {item.href === "/blog" && (
+                  <div className="pb-3 pl-3">
+                    {BLOG_TOPICS.map((topic) => (
+                      <Link
+                        key={topic.href}
+                        href={topic.href}
+                        className="block py-1.5 text-sm font-medium text-ink/70"
+                      >
+                        {topic.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
