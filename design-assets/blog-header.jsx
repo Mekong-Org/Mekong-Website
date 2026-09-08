@@ -38,9 +38,32 @@ function Header() {
   // The blog is the only page this header is ever served on, so the active item
   // is fixed here rather than derived from the URL.
   const NAV_RIGHT = [
-    { label: "Bài viết", href: SITE + "/blog", current: true },
+    { label: "Bài viết", href: SITE + "/blog", current: true, topics: true },
     { label: "Về Katsuma", href: SITE + "/ve-katsuma" },
     { label: "Làm đại lý", href: SITE + "/lam-dai-ly" },
+  ];
+
+  // Topics in the "Bài viết" menu. Hard-coded on purpose: the topics endpoint
+  // needs a secret key and sends no CORS headers, so the browser cannot read it
+  // from here, and topics change far too rarely to be worth a proxy.
+  //
+  // `label` is what the menu shows; `href` must be the topic's real slug. The
+  // one topic that exists is named as a whole question — fine as a page title,
+  // far too long for a menu — hence the short label.
+  //
+  // Add a row per topic as the content team creates them. Aim for four, named
+  // after the product lines (Nhớt xe số / Nhớt xe tay ga / Dầu hộp số xe tay ga
+  // / Chọn nhớt & bảo dưỡng) so a reader lands on the matching product. Below
+  // three rows the menu is not worth opening: drop `topics: true` above and
+  // "Bài viết" goes back to being a plain link.
+  const BLOG_TOPICS = [
+    {
+      label: "Nhớt xe số & chuẩn JASO",
+      href:
+        SITE +
+        "/blog/topic/tieu-chuan-jaso-ma2-cho-xe-so-la-gi-va-tai-sao-quan-trong",
+    },
+    { label: "Tất cả bài viết", href: SITE + "/blog/topic" },
   ];
 
   const DISPLAY =
@@ -74,7 +97,143 @@ function Header() {
     background,
   });
 
-  const renderLink = (item) => (
+  // Open state for the topics menu. The label itself stays an ordinary link to
+  // /blog and the caret beside it is a separate button, so a touch device never
+  // has to guess whether a tap means "open" or "go" — there is no hover there
+  // to tell them apart.
+  const [openTopics, setOpenTopics] = React.useState(false);
+  const menuRef = React.useRef(null);
+
+  // Whether hovering means anything here. A touch browser still synthesises
+  // mouseenter just before the click of a tap, so leaving the hover handlers
+  // live on a phone opens the menu and the tap immediately toggles it shut —
+  // the caret looks dead. Ask the device instead of guessing from width: a
+  // laptop with a touchscreen has both.
+  const [canHover, setCanHover] = React.useState(false);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setCanHover(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  React.useEffect(() => {
+    if (!openTopics) return;
+    const onDown = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpenTopics(false);
+      }
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") setOpenTopics(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openTopics]);
+
+  const renderLink = (item) =>
+    item.topics ? (
+      <span
+        key={item.label}
+        ref={menuRef}
+        className="ktm-menu"
+        style={{ position: "relative", display: "flex", alignItems: "center", gap: "6px" }}
+        onMouseEnter={canHover ? () => setOpenTopics(true) : undefined}
+        onMouseLeave={canHover ? () => setOpenTopics(false) : undefined}
+      >
+        {renderPlainLink(item)}
+        <button
+          type="button"
+          aria-label="Mở danh mục bài viết"
+          aria-expanded={openTopics}
+          // Where hover already opens the menu, the caret only ever opens it:
+          // a toggle there would close what the pointer is still hovering.
+          // Escape and clicking away are what close it. Without hover it is a
+          // plain toggle, which is the only control a phone has.
+          onClick={() => setOpenTopics((v) => (canHover ? true : !v))}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: 0,
+            border: 0,
+            background: "none",
+            cursor: "pointer",
+            color: "#141416",
+          }}
+        >
+          {/* Hand-drawn caret: icon packages are not available in this app. */}
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            aria-hidden="true"
+            style={{
+              transition: "transform 160ms ease",
+              transform: openTopics ? "rotate(180deg)" : "none",
+            }}
+          >
+            <path
+              d="M2.5 4.5 6 8l3.5-3.5"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        <span
+          role="menu"
+          hidden={!openTopics}
+          style={{
+            position: "absolute",
+            top: "calc(100% + 14px)",
+            left: 0,
+            zIndex: 30,
+            minWidth: "240px",
+            padding: "8px",
+            borderRadius: "8px",
+            background: "#fff",
+            boxShadow: "0 12px 32px rgba(20, 20, 22, 0.22)",
+          }}
+        >
+          {BLOG_TOPICS.map((topic) => (
+            <a
+              key={topic.href}
+              role="menuitem"
+              className="ktm-topic"
+              href={topic.href}
+              style={{
+                display: "block",
+                padding: "9px 12px",
+                borderRadius: "5px",
+                fontFamily: "'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif",
+                fontSize: "14px",
+                fontWeight: 500,
+                lineHeight: "20px",
+                letterSpacing: 0,
+                textTransform: "none",
+                textDecoration: "none",
+                color: "#141416",
+              }}
+            >
+              {topic.label}
+            </a>
+          ))}
+        </span>
+      </span>
+    ) : (
+      renderPlainLink(item)
+    );
+
+  const renderPlainLink = (item) => (
     <a
       key={item.label}
       href={item.href}
@@ -117,6 +276,15 @@ function Header() {
 
 .ktm-link { transition: color 160ms ease; }
 .ktm-link:hover, .ktm-link:focus-visible { color: #141416; }
+
+.ktm-topic { transition: background-color 140ms ease; }
+.ktm-topic:hover, .ktm-topic:focus-visible { background-color: #f6efe0; }
+
+/* The panel hangs off the left edge of "Bài viết", which is the last third of
+   the bar — near the right edge it would run off screen, so flip it. */
+@media (min-width: 901px) {
+  .ktm-menu [role="menu"] { left: auto !important; right: 0 !important; }
+}
 
 /* Under ~900px the three columns squeeze the wordmark to nothing, so the bar
    stacks into three centred rows instead: links, wordmark, links. */
